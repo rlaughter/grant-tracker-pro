@@ -11,6 +11,33 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { Button } from "@/components/ui/button";
+import { UserPen } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useState } from "react";
+import { useToast } from "@/components/ui/use-toast";
+
+// Mock specialists data - replace with real data later
+const specialists = [
+  { id: 1, name: "John Doe" },
+  { id: 2, name: "Jane Smith" },
+  { id: 3, name: "Mike Johnson" },
+  { id: 4, name: "Sarah Wilson" },
+  { id: 5, name: "Bob Anderson" },
+];
 
 // Mock data - replace with real data later
 const mockGrants = [
@@ -60,6 +87,8 @@ const mockGrants = [
 
 export const GrantsListing = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
+  const [selectedGrant, setSelectedGrant] = useState<number | null>(null);
 
   const handleRowClick = (grantId: number) => {
     navigate(`/grants/${grantId}`);
@@ -67,6 +96,14 @@ export const GrantsListing = () => {
 
   const formatDate = (dateString: string) => {
     return format(new Date(dateString), 'MM/dd/yyyy');
+  };
+
+  const handleSpecialistChange = (specialistName: string) => {
+    // In a real application, this would make an API call to update the specialist
+    toast({
+      title: "Specialist Updated",
+      description: `Grant specialist has been updated to ${specialistName}`,
+    });
   };
 
   return (
@@ -93,13 +130,57 @@ export const GrantsListing = () => {
               <TableRow
                 key={grant.id}
                 className="cursor-pointer hover:bg-muted/50"
-                onClick={() => handleRowClick(grant.id)}
+                onClick={(e) => {
+                  // Prevent row click when clicking the specialist button
+                  if (!(e.target as HTMLElement).closest('.specialist-button')) {
+                    handleRowClick(grant.id);
+                  }
+                }}
               >
                 <TableCell>{grant.applicationNumber}</TableCell>
                 <TableCell>{grant.grantNumber}</TableCell>
                 <TableCell className="font-medium">{grant.name}</TableCell>
                 <TableCell>{grant.department}</TableCell>
-                <TableCell>{grant.specialist}</TableCell>
+                <TableCell>
+                  <div className="flex items-center gap-2">
+                    {grant.specialist}
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <Button 
+                          variant="ghost" 
+                          size="icon" 
+                          className="specialist-button h-8 w-8"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedGrant(grant.id);
+                          }}
+                        >
+                          <UserPen className="h-4 w-4" />
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent>
+                        <DialogHeader>
+                          <DialogTitle>Assign Grant Specialist</DialogTitle>
+                        </DialogHeader>
+                        <Select onValueChange={handleSpecialistChange}>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select a specialist" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {specialists.map((specialist) => (
+                              <SelectItem 
+                                key={specialist.id} 
+                                value={specialist.name}
+                              >
+                                {specialist.name}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </DialogContent>
+                    </Dialog>
+                  </div>
+                </TableCell>
                 <TableCell>${grant.amount.toLocaleString()}</TableCell>
                 <TableCell>{formatDate(grant.startDate)}</TableCell>
                 <TableCell>{formatDate(grant.endDate)}</TableCell>
