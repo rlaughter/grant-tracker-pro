@@ -22,7 +22,7 @@ interface GrantFiscalInfoProps {
 
 export const GrantFiscalInfo = ({ fiscal }: GrantFiscalInfoProps) => {
   return (
-    <Collapsible className="w-full">
+    <Collapsible defaultOpen className="w-full">
       <Card className="p-6">
         <CollapsibleTrigger className="flex items-center justify-between w-full">
           <h3 className="font-medium text-lg">Fiscal Information</h3>

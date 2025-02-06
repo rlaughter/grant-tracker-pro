@@ -14,7 +14,7 @@ interface GrantFinancialTrackingProps {
 
 export const GrantFinancialTracking = ({ grantId }: GrantFinancialTrackingProps) => {
   return (
-    <Collapsible className="w-full">
+    <Collapsible defaultOpen className="w-full">
       <Card className="p-6">
         <CollapsibleTrigger className="flex items-center justify-between w-full">
           <h3 className="font-medium text-lg">Financial Tracking</h3>
