@@ -5,6 +5,7 @@ import { DashboardCard } from "@/components/DashboardCard";
 import { SearchBar } from "@/components/SearchBar";
 import { GrantsListing } from "@/components/GrantsListing";
 import { GrantFilters } from "@/components/GrantFilters";
+import { GlobalHistoryLog } from "@/components/GlobalHistoryLog";
 import { FileText, Users, DollarSign, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { FilterState } from "@/types/grant";
@@ -69,6 +70,7 @@ const Index = () => {
       <div className="space-y-6">
         <GrantFilters onSearch={handleSearch} onFilterChange={handleFilterChange} />
         <GrantsListing searchQuery={searchQuery} filters={filters} />
+        <GlobalHistoryLog />
       </div>
     </div>
   );
