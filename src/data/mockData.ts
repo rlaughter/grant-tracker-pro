@@ -1,0 +1,53 @@
+
+export const specialists = [
+  { id: 1, name: "John Doe" },
+  { id: 2, name: "Jane Smith" },
+  { id: 3, name: "Mike Johnson" },
+  { id: 4, name: "Sarah Wilson" },
+  { id: 5, name: "Bob Anderson" },
+];
+
+export const mockGrants = [
+  {
+    id: 1,
+    applicationNumber: "APP-2024-001",
+    grantNumber: "GRT-2024-001",
+    name: "Community Development Grant",
+    amount: 250000,
+    specialist: "John Doe",
+    startDate: "2024-01-01",
+    endDate: "2025-12-31",
+    status: "Active",
+    type: "Federal",
+    department: "Community Services",
+    restrictions: "No equipment purchases above $5,000",
+  },
+  {
+    id: 2,
+    applicationNumber: "APP-2024-002",
+    grantNumber: "GRT-2024-002",
+    name: "Education Innovation Fund",
+    amount: 175000,
+    specialist: "Jane Smith",
+    startDate: "2024-02-15",
+    endDate: "2025-02-14",
+    status: "Active",
+    type: "State",
+    department: "Education",
+    restrictions: "Must maintain 80% attendance rate",
+  },
+  {
+    id: 3,
+    applicationNumber: "APP-2024-003",
+    grantNumber: "GRT-2024-003",
+    name: "Environmental Protection Grant",
+    amount: 300000,
+    specialist: "Mike Johnson",
+    startDate: "2024-03-01",
+    endDate: "2026-02-28",
+    status: "Pending",
+    type: "Local",
+    department: "Environmental Services",
+    restrictions: "Quarterly reporting required",
+  },
+];
