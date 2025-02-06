@@ -13,16 +13,18 @@ const GrantDetail = () => {
   // Mock data - replace with actual data fetching
   const grant = {
     id: Number(id),
+    applicationNumber: "APP-2024-001",
+    grantNumber: "GRT-2024-001",
     name: "Community Development Grant",
     amount: 250000,
     specialist: "John Doe",
-    startDate: "2024-01-01",
-    endDate: "2024-12-31",
     status: "Active",
     type: "Federal",
-    description: "Supporting local community development initiatives",
-    grantor: "Department of Housing and Urban Development",
-    grantNumber: "CDG-2024-001",
+    department: "Community Services",
+    grantorType: "Federal",
+    grantorId: "FED-001",
+    masterGrantNumber: "MGN-2024-001",
+    cfdaNumber: "14.218"
   };
 
   return (
