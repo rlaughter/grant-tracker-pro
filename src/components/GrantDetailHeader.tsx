@@ -4,12 +4,19 @@ import { FileText, Download, Printer } from "lucide-react";
 
 interface GrantDetailHeaderProps {
   grant: {
-    name: string;
+    id: number;
+    applicationNumber: string;
     grantNumber: string;
-    status: string;
-    type: string;
+    name: string;
     amount: number;
     specialist: string;
+    status: string;
+    type: string;
+    department: string;
+    grantorType: string;
+    grantorId: string;
+    masterGrantNumber: string | null;
+    cfdaNumber: string | null;
   };
 }
 
@@ -19,7 +26,13 @@ export const GrantDetailHeader = ({ grant }: GrantDetailHeaderProps) => {
       <div className="flex justify-between items-start">
         <div className="space-y-1">
           <h1 className="text-2xl font-semibold tracking-tight">{grant.name}</h1>
-          <p className="text-sm text-muted-foreground">Grant #{grant.grantNumber}</p>
+          <div className="space-y-1">
+            <p className="text-sm text-muted-foreground">Application #{grant.applicationNumber}</p>
+            <p className="text-sm text-muted-foreground">Grant #{grant.grantNumber}</p>
+            {grant.masterGrantNumber && (
+              <p className="text-sm text-muted-foreground">Master Grant #{grant.masterGrantNumber}</p>
+            )}
+          </div>
         </div>
         <div className="flex gap-2">
           <Button variant="outline" size="sm">
@@ -55,9 +68,27 @@ export const GrantDetailHeader = ({ grant }: GrantDetailHeaderProps) => {
           <p className="text-sm text-muted-foreground">${grant.amount.toLocaleString()}</p>
         </div>
         <div className="space-y-1">
+          <p className="text-sm font-medium">Department</p>
+          <p className="text-sm text-muted-foreground">{grant.department}</p>
+        </div>
+        <div className="space-y-1">
+          <p className="text-sm font-medium">Grantor Type</p>
+          <p className="text-sm text-muted-foreground">{grant.grantorType}</p>
+        </div>
+        <div className="space-y-1">
+          <p className="text-sm font-medium">Grantor ID</p>
+          <p className="text-sm text-muted-foreground">{grant.grantorId}</p>
+        </div>
+        <div className="space-y-1">
           <p className="text-sm font-medium">Specialist</p>
           <p className="text-sm text-muted-foreground">{grant.specialist}</p>
         </div>
+        {grant.cfdaNumber && (
+          <div className="space-y-1">
+            <p className="text-sm font-medium">CFDA Number</p>
+            <p className="text-sm text-muted-foreground">{grant.cfdaNumber}</p>
+          </div>
+        )}
       </div>
     </Card>
   );
