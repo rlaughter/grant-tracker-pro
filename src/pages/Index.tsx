@@ -4,7 +4,7 @@ import { DashboardCard } from "@/components/DashboardCard";
 import { SearchBar } from "@/components/SearchBar";
 import { GrantsListing } from "@/components/GrantsListing";
 import { GrantFilters } from "@/components/GrantFilters";
-import { BarChart3, FileText, Users, DollarSign } from "lucide-react";
+import { FileText, Users, DollarSign } from "lucide-react";
 
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -17,13 +17,13 @@ const Index = () => {
   return (
     <div className="min-h-screen p-8 space-y-8 animate-fade-in">
       <div className="space-y-2">
-        <h1 className="text-4xl font-semibold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-purple-900">
+        <h1 className="text-4xl font-semibold tracking-tight text-slate-900">
           Grant Management
         </h1>
         <p className="text-muted-foreground">Track and manage your grants efficiently</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <DashboardCard
           title="Total Active Grants"
           value="24"
@@ -41,12 +41,6 @@ const Index = () => {
           value="$2.4M"
           icon={<DollarSign className="h-8 w-8" />}
           className="dashboard-card-3"
-        />
-        <DashboardCard
-          title="Success Rate"
-          value="87%"
-          icon={<BarChart3 className="h-8 w-8" />}
-          className="dashboard-card-4"
         />
       </div>
 
