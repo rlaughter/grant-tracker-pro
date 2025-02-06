@@ -15,8 +15,8 @@ export const GrantFilters = ({ onSearch, onFilterChange }: GrantFiltersProps) =>
       <SearchBar onSearch={onSearch} placeholder="Search grants..." />
       
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Select onValueChange={(value) => onFilterChange('status', value === 'all' ? '' : value)}>
-          <SelectTrigger>
+        <Select onValueChange={(value) => onFilterChange('status', value)}>
+          <SelectTrigger className="bg-white">
             <SelectValue placeholder="Filter by Status" />
           </SelectTrigger>
           <SelectContent>
@@ -27,8 +27,8 @@ export const GrantFilters = ({ onSearch, onFilterChange }: GrantFiltersProps) =>
           </SelectContent>
         </Select>
 
-        <Select onValueChange={(value) => onFilterChange('type', value === 'all' ? '' : value)}>
-          <SelectTrigger>
+        <Select onValueChange={(value) => onFilterChange('type', value)}>
+          <SelectTrigger className="bg-white">
             <SelectValue placeholder="Filter by Type" />
           </SelectTrigger>
           <SelectContent>
@@ -39,8 +39,8 @@ export const GrantFilters = ({ onSearch, onFilterChange }: GrantFiltersProps) =>
           </SelectContent>
         </Select>
 
-        <Select onValueChange={(value) => onFilterChange('specialist', value === 'all' ? '' : value)}>
-          <SelectTrigger>
+        <Select onValueChange={(value) => onFilterChange('specialist', value)}>
+          <SelectTrigger className="bg-white">
             <SelectValue placeholder="Filter by Specialist" />
           </SelectTrigger>
           <SelectContent>
@@ -53,8 +53,8 @@ export const GrantFilters = ({ onSearch, onFilterChange }: GrantFiltersProps) =>
           </SelectContent>
         </Select>
 
-        <Select onValueChange={(value) => onFilterChange('department', value === 'all' ? '' : value)}>
-          <SelectTrigger>
+        <Select onValueChange={(value) => onFilterChange('department', value)}>
+          <SelectTrigger className="bg-white">
             <SelectValue placeholder="Filter by Department" />
           </SelectTrigger>
           <SelectContent>

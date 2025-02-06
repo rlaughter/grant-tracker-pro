@@ -42,7 +42,7 @@ export const GrantsListing = () => {
   };
 
   const handleFilterChange = (key: keyof FilterState, value: string) => {
-    setFilters(prev => ({ ...prev, [key]: value }));
+    setFilters(prev => ({ ...prev, [key]: value === 'all' ? '' : value }));
   };
 
   const filteredGrants = useMemo(() => {
