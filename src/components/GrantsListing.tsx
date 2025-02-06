@@ -1,4 +1,3 @@
-
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useNavigate } from "react-router-dom";
@@ -27,8 +26,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useToast } from "@/components/ui/use-toast";
+import { SearchBar } from "@/components/SearchBar";
 
 // Mock specialists data - replace with real data later
 const specialists = [
@@ -85,10 +85,24 @@ const mockGrants = [
   },
 ];
 
+type FilterState = {
+  status: string;
+  type: string;
+  specialist: string;
+  department: string;
+};
+
 export const GrantsListing = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [selectedGrant, setSelectedGrant] = useState<number | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filters, setFilters] = useState<FilterState>({
+    status: "",
+    type: "",
+    specialist: "",
+    department: "",
+  });
 
   const handleRowClick = (grantId: number) => {
     navigate(`/grants/${grantId}`);
@@ -99,15 +113,94 @@ export const GrantsListing = () => {
   };
 
   const handleSpecialistChange = (specialistName: string) => {
-    // In a real application, this would make an API call to update the specialist
     toast({
       title: "Specialist Updated",
       description: `Grant specialist has been updated to ${specialistName}`,
     });
   };
 
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+  };
+
+  const handleFilterChange = (key: keyof FilterState, value: string) => {
+    setFilters(prev => ({ ...prev, [key]: value }));
+  };
+
+  const filteredGrants = useMemo(() => {
+    return mockGrants.filter(grant => {
+      const matchesSearch = searchQuery.toLowerCase() === '' || 
+        Object.values(grant).some(value => 
+          String(value).toLowerCase().includes(searchQuery.toLowerCase())
+        );
+
+      const matchesStatus = !filters.status || grant.status === filters.status;
+      const matchesType = !filters.type || grant.type === filters.type;
+      const matchesSpecialist = !filters.specialist || grant.specialist === filters.specialist;
+      const matchesDepartment = !filters.department || grant.department === filters.department;
+
+      return matchesSearch && matchesStatus && matchesType && matchesSpecialist && matchesDepartment;
+    });
+  }, [searchQuery, filters]);
+
   return (
     <div className="space-y-4">
+      <div className="flex flex-col gap-4 mb-4">
+        <SearchBar onSearch={handleSearch} placeholder="Search grants..." />
+        
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <Select onValueChange={(value) => handleFilterChange('status', value)}>
+            <SelectTrigger>
+              <SelectValue placeholder="Filter by Status" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="">All Statuses</SelectItem>
+              <SelectItem value="Active">Active</SelectItem>
+              <SelectItem value="Pending">Pending</SelectItem>
+              <SelectItem value="Expired">Expired</SelectItem>
+            </SelectContent>
+          </Select>
+
+          <Select onValueChange={(value) => handleFilterChange('type', value)}>
+            <SelectTrigger>
+              <SelectValue placeholder="Filter by Type" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="">All Types</SelectItem>
+              <SelectItem value="Federal">Federal</SelectItem>
+              <SelectItem value="State">State</SelectItem>
+              <SelectItem value="Local">Local</SelectItem>
+            </SelectContent>
+          </Select>
+
+          <Select onValueChange={(value) => handleFilterChange('specialist', value)}>
+            <SelectTrigger>
+              <SelectValue placeholder="Filter by Specialist" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="">All Specialists</SelectItem>
+              {specialists.map((specialist) => (
+                <SelectItem key={specialist.id} value={specialist.name}>
+                  {specialist.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          <Select onValueChange={(value) => handleFilterChange('department', value)}>
+            <SelectTrigger>
+              <SelectValue placeholder="Filter by Department" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="">All Departments</SelectItem>
+              <SelectItem value="Community Services">Community Services</SelectItem>
+              <SelectItem value="Education">Education</SelectItem>
+              <SelectItem value="Environmental Services">Environmental Services</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+
       <ScrollArea className="h-[600px] rounded-md border">
         <Table>
           <TableHeader>
@@ -126,7 +219,7 @@ export const GrantsListing = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {mockGrants.map((grant) => (
+            {filteredGrants.map((grant) => (
               <TableRow
                 key={grant.id}
                 className="cursor-pointer hover:bg-muted/50"
@@ -204,6 +297,7 @@ export const GrantsListing = () => {
           </TableBody>
         </Table>
       </ScrollArea>
+
       <Pagination>
         <PaginationContent>
           <PaginationItem>
