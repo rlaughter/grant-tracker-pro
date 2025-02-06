@@ -1,6 +1,8 @@
+
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useNavigate } from "react-router-dom";
+import { format } from "date-fns";
 import {
   Pagination,
   PaginationContent,
@@ -20,13 +22,11 @@ const mockGrants = [
     amount: 250000,
     specialist: "John Doe",
     startDate: "2024-01-01",
+    endDate: "2025-12-31",
     status: "Active",
     type: "Federal",
     department: "Community Services",
-    grantorType: "Federal",
-    grantorId: "FED-001",
-    masterGrantNumber: null,
-    cfdaNumber: "14.218",
+    restrictions: "No equipment purchases above $5,000",
   },
   {
     id: 2,
@@ -36,13 +36,11 @@ const mockGrants = [
     amount: 175000,
     specialist: "Jane Smith",
     startDate: "2024-02-15",
+    endDate: "2025-02-14",
     status: "Active",
     type: "State",
     department: "Education",
-    grantorType: "State",
-    grantorId: "ST-001",
-    masterGrantNumber: null,
-    cfdaNumber: null,
+    restrictions: "Must maintain 80% attendance rate",
   },
   {
     id: 3,
@@ -52,13 +50,11 @@ const mockGrants = [
     amount: 300000,
     specialist: "Mike Johnson",
     startDate: "2024-03-01",
+    endDate: "2026-02-28",
     status: "Pending",
     type: "Local",
     department: "Environmental Services",
-    grantorType: "Local",
-    grantorId: "LOC-001",
-    masterGrantNumber: null,
-    cfdaNumber: null,
+    restrictions: "Quarterly reporting required",
   },
 ];
 
@@ -67,6 +63,10 @@ export const GrantsListing = () => {
 
   const handleRowClick = (grantId: number) => {
     navigate(`/grants/${grantId}`);
+  };
+
+  const formatDate = (dateString: string) => {
+    return format(new Date(dateString), 'MM/dd/yyyy');
   };
 
   return (
@@ -80,10 +80,11 @@ export const GrantsListing = () => {
               <TableHead>Name</TableHead>
               <TableHead>Department</TableHead>
               <TableHead>Amount</TableHead>
+              <TableHead>Start Date</TableHead>
+              <TableHead>End Date</TableHead>
               <TableHead>Status</TableHead>
               <TableHead>Type</TableHead>
-              <TableHead>Grantor Type</TableHead>
-              <TableHead>CFDA #</TableHead>
+              <TableHead>Restrictions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -98,6 +99,8 @@ export const GrantsListing = () => {
                 <TableCell className="font-medium">{grant.name}</TableCell>
                 <TableCell>{grant.department}</TableCell>
                 <TableCell>${grant.amount.toLocaleString()}</TableCell>
+                <TableCell>{formatDate(grant.startDate)}</TableCell>
+                <TableCell>{formatDate(grant.endDate)}</TableCell>
                 <TableCell>
                   <span
                     className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
@@ -110,8 +113,9 @@ export const GrantsListing = () => {
                   </span>
                 </TableCell>
                 <TableCell>{grant.type}</TableCell>
-                <TableCell>{grant.grantorType}</TableCell>
-                <TableCell>{grant.cfdaNumber || "N/A"}</TableCell>
+                <TableCell className="max-w-[200px] truncate" title={grant.restrictions}>
+                  {grant.restrictions}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
