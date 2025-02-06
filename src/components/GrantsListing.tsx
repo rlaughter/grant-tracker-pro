@@ -47,17 +47,30 @@ export const GrantsListing = () => {
 
   const filteredGrants = useMemo(() => {
     return mockGrants.filter(grant => {
-      const matchesSearch = searchQuery.toLowerCase() === '' || 
+      // Search filter - check if any field contains the search query
+      const matchesSearch = !searchQuery || 
         Object.values(grant).some(value => 
           String(value).toLowerCase().includes(searchQuery.toLowerCase())
         );
 
+      // Status filter
       const matchesStatus = !filters.status || grant.status === filters.status;
+
+      // Type filter
       const matchesType = !filters.type || grant.type === filters.type;
+
+      // Specialist filter
       const matchesSpecialist = !filters.specialist || grant.specialist === filters.specialist;
+
+      // Department filter
       const matchesDepartment = !filters.department || grant.department === filters.department;
 
-      return matchesSearch && matchesStatus && matchesType && matchesSpecialist && matchesDepartment;
+      // All filters must match for the grant to be included
+      return matchesSearch && 
+             matchesStatus && 
+             matchesType && 
+             matchesSpecialist && 
+             matchesDepartment;
     });
   }, [searchQuery, filters]);
 
