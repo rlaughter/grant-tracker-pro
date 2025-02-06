@@ -15,36 +15,36 @@ export const GrantFilters = ({ onSearch, onFilterChange }: GrantFiltersProps) =>
       <SearchBar onSearch={onSearch} placeholder="Search grants..." />
       
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Select onValueChange={(value) => onFilterChange('status', value)}>
+        <Select onValueChange={(value) => onFilterChange('status', value === 'all' ? '' : value)}>
           <SelectTrigger>
             <SelectValue placeholder="Filter by Status" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">All Statuses</SelectItem>
+            <SelectItem value="all">All Statuses</SelectItem>
             <SelectItem value="Active">Active</SelectItem>
             <SelectItem value="Pending">Pending</SelectItem>
             <SelectItem value="Expired">Expired</SelectItem>
           </SelectContent>
         </Select>
 
-        <Select onValueChange={(value) => onFilterChange('type', value)}>
+        <Select onValueChange={(value) => onFilterChange('type', value === 'all' ? '' : value)}>
           <SelectTrigger>
             <SelectValue placeholder="Filter by Type" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">All Types</SelectItem>
+            <SelectItem value="all">All Types</SelectItem>
             <SelectItem value="Federal">Federal</SelectItem>
             <SelectItem value="State">State</SelectItem>
             <SelectItem value="Local">Local</SelectItem>
           </SelectContent>
         </Select>
 
-        <Select onValueChange={(value) => onFilterChange('specialist', value)}>
+        <Select onValueChange={(value) => onFilterChange('specialist', value === 'all' ? '' : value)}>
           <SelectTrigger>
             <SelectValue placeholder="Filter by Specialist" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">All Specialists</SelectItem>
+            <SelectItem value="all">All Specialists</SelectItem>
             {specialists.map((specialist) => (
               <SelectItem key={specialist.id} value={specialist.name}>
                 {specialist.name}
@@ -53,12 +53,12 @@ export const GrantFilters = ({ onSearch, onFilterChange }: GrantFiltersProps) =>
           </SelectContent>
         </Select>
 
-        <Select onValueChange={(value) => onFilterChange('department', value)}>
+        <Select onValueChange={(value) => onFilterChange('department', value === 'all' ? '' : value)}>
           <SelectTrigger>
             <SelectValue placeholder="Filter by Department" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">All Departments</SelectItem>
+            <SelectItem value="all">All Departments</SelectItem>
             <SelectItem value="Community Services">Community Services</SelectItem>
             <SelectItem value="Education">Education</SelectItem>
             <SelectItem value="Environmental Services">Environmental Services</SelectItem>
