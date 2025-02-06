@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { DashboardCard } from "@/components/DashboardCard";
 import { SearchBar } from "@/components/SearchBar";
+import { GrantsListing } from "@/components/GrantsListing";
+import { GrantFilters } from "@/components/GrantFilters";
 import { BarChart3, FileText, Users, DollarSign } from "lucide-react";
 
 const Index = () => {
@@ -17,8 +19,6 @@ const Index = () => {
         <h1 className="text-4xl font-semibold tracking-tight">Grant Management</h1>
         <p className="text-muted-foreground">Track and manage your grants efficiently</p>
       </div>
-
-      <SearchBar onSearch={handleSearch} />
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <DashboardCard
@@ -43,12 +43,14 @@ const Index = () => {
         />
       </div>
 
-      <div className="glass-card p-6 rounded-lg animate-slide-up">
-        <h2 className="text-xl font-semibold mb-4">Recent Grants</h2>
-        <div className="space-y-4">
-          {/* Placeholder for recent grants list */}
-          <p className="text-muted-foreground">No recent grants to display</p>
+      <div className="space-y-6">
+        <div className="flex justify-between items-center">
+          <SearchBar onSearch={handleSearch} placeholder="Search grants..." />
         </div>
+        
+        <GrantFilters />
+        
+        <GrantsListing />
       </div>
     </div>
   );
