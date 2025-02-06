@@ -25,3 +25,15 @@ export type Specialist = {
   id: number;
   name: string;
 };
+
+export type GrantHistoryEntry = {
+  id: number;
+  grantId: number;
+  changeDate: string;
+  changedBy: string;
+  field: string;
+  oldValue: string;
+  newValue: string;
+  changeType: 'create' | 'update' | 'delete';
+};
+
