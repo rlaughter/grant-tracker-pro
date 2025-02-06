@@ -7,14 +7,24 @@ import { GrantsListing } from "@/components/GrantsListing";
 import { GrantFilters } from "@/components/GrantFilters";
 import { FileText, Users, DollarSign, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { FilterState } from "@/types/grant";
 
 const Index = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
+  const [filters, setFilters] = useState<FilterState>({
+    status: "",
+    type: "",
+    specialist: "",
+    department: "",
+  });
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
-    // Implement search logic here
+  };
+
+  const handleFilterChange = (key: keyof FilterState, value: string) => {
+    setFilters(prev => ({ ...prev, [key]: value === 'all' ? '' : value }));
   };
 
   return (
@@ -54,8 +64,8 @@ const Index = () => {
       </div>
 
       <div className="space-y-6">
-        <GrantFilters />
-        <GrantsListing />
+        <GrantFilters onSearch={handleSearch} onFilterChange={handleFilterChange} />
+        <GrantsListing searchQuery={searchQuery} filters={filters} />
       </div>
     </div>
   );
