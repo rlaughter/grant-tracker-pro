@@ -79,6 +79,7 @@ export const GrantsListing = () => {
               <TableHead>Grant #</TableHead>
               <TableHead>Name</TableHead>
               <TableHead>Department</TableHead>
+              <TableHead>Specialist</TableHead>
               <TableHead>Amount</TableHead>
               <TableHead>Start Date</TableHead>
               <TableHead>End Date</TableHead>
@@ -98,6 +99,7 @@ export const GrantsListing = () => {
                 <TableCell>{grant.grantNumber}</TableCell>
                 <TableCell className="font-medium">{grant.name}</TableCell>
                 <TableCell>{grant.department}</TableCell>
+                <TableCell>{grant.specialist}</TableCell>
                 <TableCell>${grant.amount.toLocaleString()}</TableCell>
                 <TableCell>{formatDate(grant.startDate)}</TableCell>
                 <TableCell>{formatDate(grant.endDate)}</TableCell>
