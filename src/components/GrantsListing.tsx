@@ -1,6 +1,6 @@
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { DollarSign, FileText, User, Calendar } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import {
   Pagination,
   PaginationContent,
@@ -42,6 +42,12 @@ const mockGrants = [
 ];
 
 export const GrantsListing = () => {
+  const navigate = useNavigate();
+
+  const handleRowClick = (grantId: number) => {
+    navigate(`/grants/${grantId}`);
+  };
+
   return (
     <div className="space-y-4">
       <ScrollArea className="h-[600px] rounded-md border">
@@ -58,7 +64,11 @@ export const GrantsListing = () => {
           </TableHeader>
           <TableBody>
             {mockGrants.map((grant) => (
-              <TableRow key={grant.id} className="cursor-pointer hover:bg-muted/50">
+              <TableRow
+                key={grant.id}
+                className="cursor-pointer hover:bg-muted/50"
+                onClick={() => handleRowClick(grant.id)}
+              >
                 <TableCell className="font-medium">{grant.name}</TableCell>
                 <TableCell>${grant.amount.toLocaleString()}</TableCell>
                 <TableCell>{grant.specialist}</TableCell>
