@@ -8,6 +8,7 @@ import { GrantFilters } from "@/components/GrantFilters";
 import { FileText, Users, DollarSign, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { FilterState } from "@/types/grant";
+import { mockGrants } from "@/data/mockData";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -18,6 +19,8 @@ const Index = () => {
     specialist: "",
     department: "",
   });
+
+  const activeGrantsCount = mockGrants.filter(grant => grant.status === "Active").length;
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
@@ -45,7 +48,7 @@ const Index = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <DashboardCard
           title="Total Active Grants"
-          value="24"
+          value={activeGrantsCount}
           icon={<FileText className="h-8 w-8" />}
           className="dashboard-card-1"
         />
