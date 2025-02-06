@@ -54,12 +54,7 @@ const Index = () => {
       </div>
 
       <div className="space-y-6">
-        <div className="flex justify-between items-center">
-          <SearchBar onSearch={handleSearch} placeholder="Search grants..." />
-        </div>
-        
         <GrantFilters />
-        
         <GrantsListing />
       </div>
     </div>
