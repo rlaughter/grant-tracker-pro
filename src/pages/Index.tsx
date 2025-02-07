@@ -68,6 +68,8 @@ const Index = () => {
         />
       </div>
 
+      <SearchBar onSearch={handleSearch} placeholder="Search grants..." />
+
       <div className="space-y-6">
         <GrantFilters onSearch={handleSearch} onFilterChange={handleFilterChange} />
         <GrantsListing searchQuery={searchQuery} filters={filters} />
