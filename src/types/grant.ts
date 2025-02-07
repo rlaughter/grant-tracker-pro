@@ -12,6 +12,14 @@ export type Grant = {
   type: string;
   department: string;
   restrictions: string;
+  fiscal?: {
+    startYear: number;
+    startMonth: string;
+    endYear: number;
+    endMonth: string;
+    requestedAmount: number;
+    awardedAmount: number;
+  };
 };
 
 export type FilterState = {

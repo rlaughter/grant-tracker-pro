@@ -9,23 +9,19 @@ import { GrantGrantorInfo } from "@/components/GrantGrantorInfo";
 import { GrantFiscalInfo } from "@/components/GrantFiscalInfo";
 import { GrantFinancialTracking } from "@/components/GrantFinancialTracking";
 import { useToast } from "@/hooks/use-toast";
-import { mockGrants } from "@/data/mockData";
+import { mockGrants, mockGrantHistory } from "@/data/mockData";
+import type { Grant } from "@/types/grant";
 
 const GrantDetail = () => {
   const { id } = useParams();
   const { toast } = useToast();
 
-  // Mock data - replace with actual data fetching
+  // Find the grant in mockGrants
+  const grantData = mockGrants.find(g => g.id === Number(id));
+
+  // Mock data combining grant data with additional fields
   const grant = {
-    id: Number(id),
-    applicationNumber: "APP-2024-001",
-    grantNumber: "GRT-2024-001",
-    name: "Community Development Grant",
-    amount: 250000,
-    specialist: "John Doe",
-    status: "Active",
-    type: "Federal",
-    department: "Community Services",
+    ...grantData,
     grantorType: "Federal",
     grantorId: "FED-001",
     masterGrantNumber: "MGN-2024-001",
@@ -48,10 +44,7 @@ const GrantDetail = () => {
   };
 
   const handleFiscalUpdate = (updatedFiscal: any) => {
-    // In a real application, this would make an API call to update the fiscal information
-    console.log("Updated fiscal information:", updatedFiscal);
-    
-    // Mock updating the grants array
+    // Update mock grants
     const grantIndex = mockGrants.findIndex(g => g.id === grant.id);
     if (grantIndex !== -1) {
       mockGrants[grantIndex] = {
@@ -60,11 +53,29 @@ const GrantDetail = () => {
       };
     }
 
+    // Add to history log
+    const newHistoryEntry = {
+      id: mockGrantHistory.length + 1,
+      grantId: grant.id,
+      changeDate: new Date().toISOString(),
+      changedBy: "Current User", // In a real app, this would come from auth context
+      field: "fiscal",
+      oldValue: JSON.stringify(grant.fiscal),
+      newValue: JSON.stringify(updatedFiscal),
+      changeType: "update" as const,
+    };
+
+    mockGrantHistory.push(newHistoryEntry);
+
     toast({
       title: "Fiscal Information Updated",
       description: "The fiscal information has been successfully updated.",
     });
   };
+
+  if (!grant) {
+    return <div>Grant not found</div>;
+  }
 
   return (
     <div className="min-h-screen p-8 space-y-8 animate-fade-in">
@@ -105,3 +116,4 @@ const GrantDetail = () => {
 };
 
 export default GrantDetail;
+
