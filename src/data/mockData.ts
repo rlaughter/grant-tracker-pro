@@ -20,6 +20,14 @@ export const mockGrants = [
     type: "Federal",
     department: "Community Services",
     restrictions: "No equipment purchases above $5,000",
+    fiscal: {
+      startYear: 2024,
+      startMonth: "January",
+      endYear: 2025,
+      endMonth: "December",
+      requestedAmount: 300000,
+      awardedAmount: 250000
+    }
   },
   {
     id: 2,
@@ -149,7 +157,7 @@ export const mockGrants = [
   }
 ];
 
-export const mockGrantHistory = [
+export let mockGrantHistory = [
   {
     id: 1,
     grantId: 1,
@@ -190,4 +198,4 @@ export const mockGrantHistory = [
     newValue: "No equipment purchases above $5,000",
     changeType: "update",
   },
-] as const;
+];
