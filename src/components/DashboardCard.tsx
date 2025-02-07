@@ -14,7 +14,7 @@ export const DashboardCard = ({ title, value, icon, className }: DashboardCardPr
     <Card className={cn("glass-card p-6 transition-all duration-300 hover:shadow-xl", className)}>
       <div className="flex items-center justify-between">
         <div className="space-y-2">
-          <p className="text-sm text-white">{title}</p>
+          <p className="text-sm text-white">Total Available</p>
           <p className="text-2xl font-semibold">{value}</p>
         </div>
         <div className="text-muted-foreground">{icon}</div>
