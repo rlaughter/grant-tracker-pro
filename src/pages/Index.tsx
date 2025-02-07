@@ -2,7 +2,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { DashboardCard } from "@/components/DashboardCard";
-import { SearchBar } from "@/components/SearchBar";
 import { GrantsListing } from "@/components/GrantsListing";
 import { GrantFilters } from "@/components/GrantFilters";
 import { GlobalHistoryLog } from "@/components/GlobalHistoryLog";
@@ -51,8 +50,6 @@ const Index = () => {
         </Button>
       </div>
 
-      <SearchBar onSearch={handleSearch} placeholder="Search by grant name, number, or date..." />
-
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <DashboardCard
           title="Total Active Grants"
@@ -75,10 +72,15 @@ const Index = () => {
       </div>
 
       <div className="space-y-6">
-        <GrantFilters onSearch={handleSearch} onFilterChange={handleFilterChange} />
+        <GrantFilters 
+          onSearch={handleSearch} 
+          onFilterChange={handleFilterChange}
+          startDate={startDate}
+          endDate={endDate}
+        />
         <GrantsListing 
           searchQuery={searchQuery} 
-          filters={filters} 
+          filters={filters}
           startDate={startDate}
           endDate={endDate}
         />
