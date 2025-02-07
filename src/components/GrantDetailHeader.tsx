@@ -1,8 +1,11 @@
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { FileText, Download, Printer, Edit, ArrowLeft } from "lucide-react";
+import { FileText, Download, Printer, ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { EditGrantDialog } from "./EditGrantDialog";
+import { mockGrants } from "@/data/mockData";
+import { useToast } from "@/hooks/use-toast";
 
 interface GrantDetailHeaderProps {
   grant: {
@@ -19,11 +22,39 @@ interface GrantDetailHeaderProps {
     grantorId: string;
     masterGrantNumber: string | null;
     cfdaNumber: string | null;
+    grantorInfo: {
+      name: string;
+      contact: string;
+      phone: string;
+      email: string;
+      address: string;
+    };
   };
 }
 
 export const GrantDetailHeader = ({ grant }: GrantDetailHeaderProps) => {
   const navigate = useNavigate();
+  const { toast } = useToast();
+
+  const handleUpdateGrant = (updatedGrant: any) => {
+    // In a real application, this would make an API call to update the grant
+    // For now, we'll just show a toast notification
+    console.log("Updated grant:", updatedGrant);
+    
+    // Mock updating the grants array
+    const grantIndex = mockGrants.findIndex(g => g.id === updatedGrant.id);
+    if (grantIndex !== -1) {
+      mockGrants[grantIndex] = {
+        ...mockGrants[grantIndex],
+        ...updatedGrant
+      };
+    }
+
+    toast({
+      title: "Grant Updated",
+      description: "The grant has been successfully updated.",
+    });
+  };
 
   return (
     <Card className="p-6">
@@ -47,10 +78,7 @@ export const GrantDetailHeader = ({ grant }: GrantDetailHeaderProps) => {
               <Download className="h-4 w-4 mr-2" />
               Export
             </Button>
-            <Button size="sm">
-              <Edit className="h-4 w-4 mr-2" />
-              Edit
-            </Button>
+            <EditGrantDialog grant={grant} onUpdate={handleUpdateGrant} />
           </div>
         </div>
 
