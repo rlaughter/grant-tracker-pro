@@ -6,7 +6,7 @@ import { SearchBar } from "@/components/SearchBar";
 import { GrantsListing } from "@/components/GrantsListing";
 import { GrantFilters } from "@/components/GrantFilters";
 import { GlobalHistoryLog } from "@/components/GlobalHistoryLog";
-import { FileText, Users, DollarSign, Plus } from "lucide-react";
+import { FileText, DollarSign, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { FilterState } from "@/types/grant";
 import { mockGrants } from "@/data/mockData";
@@ -22,6 +22,7 @@ const Index = () => {
   });
 
   const activeGrantsCount = mockGrants.filter(grant => grant.status === "Active").length;
+  const totalSpentAmount = mockGrants.reduce((acc, grant) => acc + (grant.amount * 0.3), 0); // Assuming 30% spent on average
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
@@ -54,9 +55,9 @@ const Index = () => {
           className="dashboard-card-1"
         />
         <DashboardCard
-          title="Grant Specialists"
-          value="8"
-          icon={<Users className="h-8 w-8" />}
+          title="Total Spent"
+          value={`$${(totalSpentAmount / 1000000).toFixed(1)}M`}
+          icon={<DollarSign className="h-8 w-8" />}
           className="dashboard-card-2"
         />
         <DashboardCard
