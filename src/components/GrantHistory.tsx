@@ -27,7 +27,7 @@ const getChangeIcon = (changeType: GrantHistoryEntry["changeType"]) => {
   }
 };
 
-const getChangeDescription = (entry: GrantHistoryEntry) => {
+const getChangeDescription = (entry: GrantHistoryEntry): string => {
   switch (entry.changeType) {
     case "create":
       return "Grant created";
@@ -81,4 +81,3 @@ export const GrantHistory = ({ grantId }: GrantHistoryProps) => {
     </Collapsible>
   );
 };
-
