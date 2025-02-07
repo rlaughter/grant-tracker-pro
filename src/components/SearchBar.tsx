@@ -3,7 +3,7 @@ import { Search, Calendar } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { useState, useEffect } from "react";
-import { DatePicker } from "@/components/ui/calendar";
+import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { format } from "date-fns";
@@ -62,7 +62,7 @@ export const SearchBar = ({ onSearch, placeholder = "Search grants..." }: Search
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0" align="start">
-          <DatePicker
+          <CalendarComponent
             mode="single"
             selected={startDate}
             onSelect={setStartDate}
@@ -85,7 +85,7 @@ export const SearchBar = ({ onSearch, placeholder = "Search grants..." }: Search
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0" align="start">
-          <DatePicker
+          <CalendarComponent
             mode="single"
             selected={endDate}
             onSelect={setEndDate}
