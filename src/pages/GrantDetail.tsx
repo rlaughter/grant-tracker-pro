@@ -8,9 +8,12 @@ import { GrantBasicInfo } from "@/components/GrantBasicInfo";
 import { GrantGrantorInfo } from "@/components/GrantGrantorInfo";
 import { GrantFiscalInfo } from "@/components/GrantFiscalInfo";
 import { GrantFinancialTracking } from "@/components/GrantFinancialTracking";
+import { useToast } from "@/hooks/use-toast";
+import { mockGrants } from "@/data/mockData";
 
 const GrantDetail = () => {
   const { id } = useParams();
+  const { toast } = useToast();
 
   // Mock data - replace with actual data fetching
   const grant = {
@@ -44,6 +47,25 @@ const GrantDetail = () => {
     }
   };
 
+  const handleFiscalUpdate = (updatedFiscal: any) => {
+    // In a real application, this would make an API call to update the fiscal information
+    console.log("Updated fiscal information:", updatedFiscal);
+    
+    // Mock updating the grants array
+    const grantIndex = mockGrants.findIndex(g => g.id === grant.id);
+    if (grantIndex !== -1) {
+      mockGrants[grantIndex] = {
+        ...mockGrants[grantIndex],
+        fiscal: updatedFiscal
+      };
+    }
+
+    toast({
+      title: "Fiscal Information Updated",
+      description: "The fiscal information has been successfully updated.",
+    });
+  };
+
   return (
     <div className="min-h-screen p-8 space-y-8 animate-fade-in">
       <GrantDetailHeader grant={grant} />
@@ -65,7 +87,7 @@ const GrantDetail = () => {
           <div className="grid gap-6">
             <GrantBasicInfo grant={grant} />
             <GrantGrantorInfo grantorInfo={grant.grantorInfo} />
-            <GrantFiscalInfo fiscal={grant.fiscal} />
+            <GrantFiscalInfo fiscal={grant.fiscal} onUpdate={handleFiscalUpdate} />
             <GrantFinancialTracking grantId={grant.id} />
           </div>
         </TabsContent>
