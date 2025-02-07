@@ -16,7 +16,7 @@ interface GrantHistoryProps {
   grantId: number;
 }
 
-const getChangeIcon = (changeType: GrantHistoryEntry["changeType"]) => {
+const getChangeIcon = (changeType: "create" | "update" | "delete") => {
   switch (changeType) {
     case "create":
       return <Plus className="h-4 w-4 text-green-500" />;
