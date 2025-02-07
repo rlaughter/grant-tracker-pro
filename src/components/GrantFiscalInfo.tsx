@@ -93,12 +93,16 @@ export const GrantFiscalInfo = ({ fiscal, onUpdate }: GrantFiscalInfoProps) => {
                         value={formData.startMonth}
                         onValueChange={(value) => handleInputChange("startMonth", value)}
                       >
-                        <SelectTrigger>
+                        <SelectTrigger className="bg-white border-purple-100 hover:border-purple-200">
                           <SelectValue placeholder="Select month" />
                         </SelectTrigger>
-                        <SelectContent>
+                        <SelectContent className="bg-white/95 backdrop-blur-sm border-purple-100 shadow-lg z-50">
                           {months.map((month) => (
-                            <SelectItem key={month} value={month}>
+                            <SelectItem 
+                              key={month} 
+                              value={month}
+                              className="hover:bg-purple-50"
+                            >
                               {month}
                             </SelectItem>
                           ))}
@@ -120,12 +124,16 @@ export const GrantFiscalInfo = ({ fiscal, onUpdate }: GrantFiscalInfoProps) => {
                         value={formData.endMonth}
                         onValueChange={(value) => handleInputChange("endMonth", value)}
                       >
-                        <SelectTrigger>
+                        <SelectTrigger className="bg-white border-purple-100 hover:border-purple-200">
                           <SelectValue placeholder="Select month" />
                         </SelectTrigger>
-                        <SelectContent>
+                        <SelectContent className="bg-white/95 backdrop-blur-sm border-purple-100 shadow-lg z-50">
                           {months.map((month) => (
-                            <SelectItem key={month} value={month}>
+                            <SelectItem 
+                              key={month} 
+                              value={month}
+                              className="hover:bg-purple-50"
+                            >
                               {month}
                             </SelectItem>
                           ))}
