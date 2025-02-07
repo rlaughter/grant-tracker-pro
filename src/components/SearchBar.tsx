@@ -23,7 +23,8 @@ export const SearchBar = ({ onSearch, placeholder = "Search grants..." }: Search
       
       onSearch(searchTerm, parsedStartDate, parsedEndDate);
       
-      if (searchTerm.length > 0 || startDate || endDate) {
+      // Only show toast when there's a search term
+      if (searchTerm.length > 0) {
         toast({
           title: "Searching grants...",
           description: `Looking for grants matching "${searchTerm}"${startDate ? ` from ${startDate}` : ''}${endDate ? ` to ${endDate}` : ''}`,
