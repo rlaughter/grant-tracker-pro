@@ -14,6 +14,8 @@ import { mockGrants } from "@/data/mockData";
 const Index = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
   const [filters, setFilters] = useState<FilterState>({
     status: "",
     type: "",
@@ -22,10 +24,12 @@ const Index = () => {
   });
 
   const activeGrantsCount = mockGrants.filter(grant => grant.status === "Active").length;
-  const totalSpentAmount = mockGrants.reduce((acc, grant) => acc + (grant.amount * 0.3), 0); // Assuming 30% spent on average
+  const totalSpentAmount = mockGrants.reduce((acc, grant) => acc + (grant.amount * 0.3), 0);
 
-  const handleSearch = (query: string) => {
+  const handleSearch = (query: string, newStartDate?: Date | null, newEndDate?: Date | null) => {
     setSearchQuery(query);
+    if (newStartDate !== undefined) setStartDate(newStartDate);
+    if (newEndDate !== undefined) setEndDate(newEndDate);
   };
 
   const handleFilterChange = (key: keyof FilterState, value: string) => {
@@ -72,7 +76,12 @@ const Index = () => {
 
       <div className="space-y-6">
         <GrantFilters onSearch={handleSearch} onFilterChange={handleFilterChange} />
-        <GrantsListing searchQuery={searchQuery} filters={filters} />
+        <GrantsListing 
+          searchQuery={searchQuery} 
+          filters={filters} 
+          startDate={startDate}
+          endDate={endDate}
+        />
         <GlobalHistoryLog />
       </div>
     </div>

@@ -1,4 +1,3 @@
-
 import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
@@ -13,13 +12,16 @@ import {
 import { GrantsTable } from "@/components/grants/GrantsTable";
 import { mockGrants } from "@/data/mockData";
 import { FilterState } from "@/types/grant";
+import { isWithinInterval, parseISO } from "date-fns";
 
 interface GrantsListingProps {
   searchQuery: string;
   filters: FilterState;
+  startDate?: Date | null;
+  endDate?: Date | null;
 }
 
-export const GrantsListing = ({ searchQuery, filters }: GrantsListingProps) => {
+export const GrantsListing = ({ searchQuery, filters, startDate, endDate }: GrantsListingProps) => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -66,13 +68,37 @@ export const GrantsListing = ({ searchQuery, filters }: GrantsListingProps) => {
       // Department filter
       const matchesDepartment = !filters.department || grant.department === filters.department;
 
+      // Date range filter
+      const matchesDateRange = (() => {
+        if (!startDate && !endDate) return true;
+        
+        const grantStartDate = parseISO(grant.startDate);
+        const grantEndDate = parseISO(grant.endDate);
+
+        if (startDate && endDate) {
+          return isWithinInterval(grantStartDate, { start: startDate, end: endDate }) ||
+                 isWithinInterval(grantEndDate, { start: startDate, end: endDate });
+        }
+        
+        if (startDate) {
+          return grantStartDate >= startDate || grantEndDate >= startDate;
+        }
+        
+        if (endDate) {
+          return grantStartDate <= endDate || grantEndDate <= endDate;
+        }
+
+        return true;
+      })();
+
       return matchesSearch && 
              matchesStatus && 
              matchesType && 
              matchesSpecialist && 
-             matchesDepartment;
+             matchesDepartment &&
+             matchesDateRange;
     });
-  }, [searchQuery, filters]);
+  }, [searchQuery, filters, startDate, endDate]);
 
   return (
     <div className="space-y-4">
