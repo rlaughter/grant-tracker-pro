@@ -28,7 +28,7 @@ export const SearchBar = ({ onSearch, placeholder = "Search grants..." }: Search
         toast({
           title: "Searching grants...",
           description: `Looking for grants matching "${searchTerm}"${startDate ? ` from ${startDate}` : ''}${endDate ? ` to ${endDate}` : ''}`,
-          duration: 2000,
+          duration: 2000, // 2 seconds duration
         });
       }
     }, 300);
