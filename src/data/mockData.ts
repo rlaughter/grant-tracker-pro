@@ -1,3 +1,4 @@
+
 export const specialists = [
   { id: 1, name: "John Doe" },
   { id: 2, name: "Jane Smith" },
@@ -166,7 +167,7 @@ export let mockGrantHistory = [
     field: "status",
     oldValue: "Pending",
     newValue: "Active",
-    changeType: "update",
+    changeType: "update" as const,
   },
   {
     id: 2,
@@ -176,7 +177,7 @@ export let mockGrantHistory = [
     field: "amount",
     oldValue: "200000",
     newValue: "250000",
-    changeType: "update",
+    changeType: "update" as const,
   },
   {
     id: 3,
@@ -186,7 +187,7 @@ export let mockGrantHistory = [
     field: "all",
     oldValue: "",
     newValue: "",
-    changeType: "create",
+    changeType: "create" as const,
   },
   {
     id: 4,
@@ -196,6 +197,6 @@ export let mockGrantHistory = [
     field: "restrictions",
     oldValue: "No restrictions",
     newValue: "No equipment purchases above $5,000",
-    changeType: "update",
+    changeType: "update" as const,
   },
 ];
