@@ -102,13 +102,13 @@ export const EditGrantDialog = ({ grant, onUpdate }: EditGrantDialogProps) => {
                 value={formData.status}
                 onValueChange={(value) => handleInputChange("status", value)}
               >
-                <SelectTrigger>
+                <SelectTrigger className="bg-white border-purple-100 hover:border-purple-200">
                   <SelectValue placeholder="Select status" />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Active">Active</SelectItem>
-                  <SelectItem value="Pending">Pending</SelectItem>
-                  <SelectItem value="Expired">Expired</SelectItem>
+                <SelectContent className="bg-white/95 backdrop-blur-sm border-purple-100 shadow-lg z-50">
+                  <SelectItem value="Active" className="hover:bg-purple-50">Active</SelectItem>
+                  <SelectItem value="Pending" className="hover:bg-purple-50">Pending</SelectItem>
+                  <SelectItem value="Expired" className="hover:bg-purple-50">Expired</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -118,13 +118,13 @@ export const EditGrantDialog = ({ grant, onUpdate }: EditGrantDialogProps) => {
                 value={formData.type}
                 onValueChange={(value) => handleInputChange("type", value)}
               >
-                <SelectTrigger>
+                <SelectTrigger className="bg-white border-purple-100 hover:border-purple-200">
                   <SelectValue placeholder="Select type" />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Federal">Federal</SelectItem>
-                  <SelectItem value="State">State</SelectItem>
-                  <SelectItem value="Local">Local</SelectItem>
+                <SelectContent className="bg-white/95 backdrop-blur-sm border-purple-100 shadow-lg z-50">
+                  <SelectItem value="Federal" className="hover:bg-purple-50">Federal</SelectItem>
+                  <SelectItem value="State" className="hover:bg-purple-50">State</SelectItem>
+                  <SelectItem value="Local" className="hover:bg-purple-50">Local</SelectItem>
                 </SelectContent>
               </Select>
             </div>
