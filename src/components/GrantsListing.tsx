@@ -34,13 +34,25 @@ export const GrantsListing = ({ searchQuery, filters }: GrantsListingProps) => {
     });
   };
 
+  const searchFields = [
+    'applicationNumber',
+    'grantNumber',
+    'name',
+    'department',
+    'specialist',
+    'type',
+    'status',
+    'restrictions'
+  ];
+
   const filteredGrants = useMemo(() => {
     return mockGrants.filter(grant => {
-      // Search filter - check if any field contains the search query
-      const matchesSearch = !searchQuery || 
-        Object.values(grant).some(value => 
-          String(value).toLowerCase().includes(searchQuery.toLowerCase())
-        );
+      // Search filter - check multiple fields for the search query
+      const matchesSearch = !searchQuery || searchFields.some(field => 
+        String(grant[field as keyof typeof grant])
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase())
+      );
 
       // Status filter
       const matchesStatus = !filters.status || grant.status === filters.status;
@@ -54,7 +66,6 @@ export const GrantsListing = ({ searchQuery, filters }: GrantsListingProps) => {
       // Department filter
       const matchesDepartment = !filters.department || grant.department === filters.department;
 
-      // All filters must match for the grant to be included
       return matchesSearch && 
              matchesStatus && 
              matchesType && 
