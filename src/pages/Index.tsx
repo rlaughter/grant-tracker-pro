@@ -51,6 +51,8 @@ const Index = () => {
         </Button>
       </div>
 
+      <SearchBar onSearch={handleSearch} placeholder="Search by grant name, number, or date..." />
+
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <DashboardCard
           title="Total Active Grants"
@@ -71,8 +73,6 @@ const Index = () => {
           className="dashboard-card-3"
         />
       </div>
-
-      <SearchBar onSearch={handleSearch} placeholder="Search grants..." />
 
       <div className="space-y-6">
         <GrantFilters onSearch={handleSearch} onFilterChange={handleFilterChange} />
