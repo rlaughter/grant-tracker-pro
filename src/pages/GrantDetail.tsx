@@ -9,7 +9,7 @@ import { GrantFiscalInfo } from "@/components/GrantFiscalInfo";
 import { GrantFinancialTracking } from "@/components/GrantFinancialTracking";
 import { useToast } from "@/hooks/use-toast";
 import { mockGrants, mockGrantHistory } from "@/data/mockData";
-import type { Grant } from "@/types/grant";
+import type { Grant, GrantHistoryEntry } from "@/types/grant";
 
 const GrantDetail = () => {
   const { id } = useParams();
