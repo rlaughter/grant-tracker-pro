@@ -4,7 +4,7 @@ import { Clock, Edit, Plus, Trash } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { mockGrantHistory } from "@/data/mockData";
+import { mockGrantHistory } from "@/data/grantHistory";
 import type { GrantHistoryEntry, FilterState } from "@/types/grant";
 import { useState } from "react";
 
@@ -74,25 +74,25 @@ export const GlobalHistoryLog = ({
     );
   }
 
-  // Apply other filters
+  // Apply other filters - only if they are not empty strings
   if (filters.status) {
     filteredHistory = filteredHistory.filter(entry => 
-      entry.status === filters.status
+      entry.status.toLowerCase() === filters.status.toLowerCase()
     );
   }
   if (filters.type) {
     filteredHistory = filteredHistory.filter(entry => 
-      entry.grantType === filters.type
+      entry.grantType.toLowerCase() === filters.type.toLowerCase()
     );
   }
   if (filters.specialist) {
     filteredHistory = filteredHistory.filter(entry => 
-      entry.specialist === filters.specialist
+      entry.specialist.toLowerCase() === filters.specialist.toLowerCase()
     );
   }
   if (filters.department) {
     filteredHistory = filteredHistory.filter(entry => 
-      entry.department === filters.department
+      entry.department.toLowerCase() === filters.department.toLowerCase()
     );
   }
 
