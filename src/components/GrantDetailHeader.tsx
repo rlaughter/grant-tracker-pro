@@ -30,9 +30,10 @@ interface GrantDetailHeaderProps {
       address: string;
     };
   };
+  hideBackButton?: boolean;
 }
 
-export const GrantDetailHeader = ({ grant }: GrantDetailHeaderProps) => {
+export const GrantDetailHeader = ({ grant, hideBackButton = false }: GrantDetailHeaderProps) => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -60,15 +61,17 @@ export const GrantDetailHeader = ({ grant }: GrantDetailHeaderProps) => {
     <Card className="p-6">
       <div className="flex flex-col space-y-6">
         <div className="flex items-center justify-between">
-          <Button 
-            variant="ghost" 
-            size="sm" 
-            onClick={() => navigate(-1)}
-            className="flex items-center gap-2"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back to Grants
-          </Button>
+          {!hideBackButton && (
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              onClick={() => navigate(-1)}
+              className="flex items-center gap-2"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              Back to Grants
+            </Button>
+          )}
           <div className="flex gap-2">
             <Button variant="outline" size="sm">
               <Printer className="h-4 w-4 mr-2" />

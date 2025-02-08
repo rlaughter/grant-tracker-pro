@@ -1,6 +1,4 @@
 
-import { X } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { GrantDetailHeader } from "@/components/GrantDetailHeader";
@@ -40,11 +38,10 @@ export const GrantDetailsDialog = ({
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-lg font-semibold">Grant Details</h2>
-          {/* Removed the duplicate close button here */}
         </div>
         {selectedGrant && (
           <div className="space-y-8">
-            <GrantDetailHeader grant={selectedGrant} />
+            <GrantDetailHeader grant={selectedGrant} hideBackButton={true} />
             
             <Tabs defaultValue="details" className="w-full">
               <TabsList className="grid w-full max-w-2xl grid-cols-3">
@@ -85,4 +82,3 @@ export const GrantDetailsDialog = ({
     </Dialog>
   );
 };
-
