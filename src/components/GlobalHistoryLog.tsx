@@ -10,7 +10,14 @@ import type { GrantHistoryEntry, FilterState } from "@/types/grant";
 import { useState } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import GrantDetail from "@/pages/GrantDetail";
+import { GrantDetailHeader } from "@/components/GrantDetailHeader";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { GrantBasicInfo } from "@/components/GrantBasicInfo";
+import { GrantGrantorInfo } from "@/components/GrantGrantorInfo";
+import { GrantFiscalInfo } from "@/components/GrantFiscalInfo";
+import { GrantFinancialTracking } from "@/components/GrantFinancialTracking";
+import { GrantDocuments } from "@/components/GrantDocuments";
+import { GrantTimeline } from "@/components/GrantTimeline";
 
 interface GlobalHistoryLogProps {
   searchQuery?: string;
@@ -80,7 +87,7 @@ export const GlobalHistoryLog = ({
     );
   }
 
-  // Apply other filters - only if they are not empty strings
+  // Apply other filters
   if (filters.status) {
     filteredHistory = filteredHistory.filter(entry => 
       entry.status.toLowerCase() === filters.status.toLowerCase()
@@ -131,6 +138,24 @@ export const GlobalHistoryLog = ({
     setIsDialogOpen(true);
   };
 
+  // Find the selected grant data
+  const selectedGrant = selectedGrantId 
+    ? {
+        ...mockGrants.find(g => g.id === selectedGrantId),
+        grantorType: "Federal",
+        grantorId: "FED-001",
+        masterGrantNumber: "MGN-2024-001",
+        cfdaNumber: "14.218",
+        grantorInfo: {
+          name: "Department of Education",
+          contact: "Jane Smith",
+          phone: "(555) 123-4567",
+          email: "jane.smith@ed.gov",
+          address: "123 Education Ave, Washington DC"
+        }
+      }
+    : null;
+
   return (
     <>
       <Card className="p-6">
@@ -169,7 +194,7 @@ export const GlobalHistoryLog = ({
                       className="p-0 h-auto font-normal"
                       onClick={() => handleGrantClick(entry.grantId)}
                     >
-                      GRT-{entry.grantId.toString().padStart(4, '0')}
+                      {`GRT-${entry.grantId.toString().padStart(4, '0')}`}
                     </Button>
                   </TableCell>
                   <TableCell>{getChangeDescription(entry)}</TableCell>
@@ -196,9 +221,43 @@ export const GlobalHistoryLog = ({
               <X className="h-4 w-4" />
             </Button>
           </div>
-          {selectedGrantId && (
-            <div className="grant-detail-wrapper">
-              <GrantDetail id={selectedGrantId.toString()} />
+          {selectedGrant && (
+            <div className="space-y-8">
+              <GrantDetailHeader grant={selectedGrant} />
+              
+              <Tabs defaultValue="details" className="w-full">
+                <TabsList className="grid w-full max-w-2xl grid-cols-3">
+                  <TabsTrigger value="details" className="flex items-center gap-2">
+                    Details & Finances
+                  </TabsTrigger>
+                  <TabsTrigger value="documents" className="flex items-center gap-2">
+                    Documents
+                  </TabsTrigger>
+                  <TabsTrigger value="timeline" className="flex items-center gap-2">
+                    Timeline
+                  </TabsTrigger>
+                </TabsList>
+
+                <TabsContent value="details">
+                  <div className="grid gap-6">
+                    <GrantBasicInfo grant={selectedGrant} />
+                    <GrantGrantorInfo grantorInfo={selectedGrant.grantorInfo} />
+                    <GrantFiscalInfo 
+                      fiscal={selectedGrant.fiscal}
+                      onUpdate={() => {}} // Empty function since we don't want to update from the dialog
+                    />
+                    <GrantFinancialTracking grantId={selectedGrant.id} />
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="documents">
+                  <GrantDocuments grantId={selectedGrant.id} />
+                </TabsContent>
+
+                <TabsContent value="timeline">
+                  <GrantTimeline grantId={selectedGrant.id} />
+                </TabsContent>
+              </Tabs>
             </div>
           )}
         </DialogContent>
@@ -206,3 +265,4 @@ export const GlobalHistoryLog = ({
     </>
   );
 };
+
