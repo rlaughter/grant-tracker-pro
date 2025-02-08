@@ -40,13 +40,7 @@ export const GrantDetailsDialog = ({
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-lg font-semibold">Grant Details</h2>
-          <Button 
-            variant="ghost" 
-            size="icon"
-            onClick={() => onOpenChange(false)}
-          >
-            <X className="h-4 w-4" />
-          </Button>
+          {/* Removed the duplicate close button here */}
         </div>
         {selectedGrant && (
           <div className="space-y-8">
@@ -91,3 +85,4 @@ export const GrantDetailsDialog = ({
     </Dialog>
   );
 };
+
