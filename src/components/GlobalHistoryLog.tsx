@@ -131,7 +131,7 @@ export const GlobalHistoryLog = ({
           <TableHeader>
             <TableRow>
               <TableHead className="w-8"></TableHead>
-              <TableHead>Grant</TableHead>
+              <TableHead>Grant #</TableHead>
               <TableHead>Change</TableHead>
               <TableHead 
                 className="cursor-pointer hover:bg-muted/50"
@@ -151,7 +151,7 @@ export const GlobalHistoryLog = ({
             {sortedHistory.map((entry) => (
               <TableRow key={entry.id}>
                 <TableCell>{getChangeIcon(entry.changeType)}</TableCell>
-                <TableCell>#{entry.grantId}</TableCell>
+                <TableCell>GRT-{entry.grantId.toString().padStart(4, '0')}</TableCell>
                 <TableCell>{getChangeDescription(entry)}</TableCell>
                 <TableCell>{entry.changedBy}</TableCell>
                 <TableCell>
