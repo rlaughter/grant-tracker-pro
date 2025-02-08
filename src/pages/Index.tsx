@@ -5,7 +5,7 @@ import { DashboardCard } from "@/components/DashboardCard";
 import { GrantsListing } from "@/components/GrantsListing";
 import { GrantFilters } from "@/components/GrantFilters";
 import { GlobalHistoryLog } from "@/components/GlobalHistoryLog";
-import { FileText, DollarSign, Plus } from "lucide-react";
+import { FileText, DollarSign, Plus, History } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { FilterState } from "@/types/grant";
 import { mockGrants } from "@/data/mockData";
@@ -44,10 +44,16 @@ const Index = () => {
           </h1>
           <p className="text-muted-foreground">Track and manage your grants efficiently</p>
         </div>
-        <Button onClick={() => navigate("/grants/new")}>
-          <Plus className="h-4 w-4 mr-2" />
-          New Grant
-        </Button>
+        <div className="flex gap-2">
+          <Button variant="outline" onClick={() => navigate("/history")}>
+            <History className="h-4 w-4 mr-2" />
+            History
+          </Button>
+          <Button onClick={() => navigate("/grants/new")}>
+            <Plus className="h-4 w-4 mr-2" />
+            New Grant
+          </Button>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -84,7 +90,6 @@ const Index = () => {
           startDate={startDate}
           endDate={endDate}
         />
-        <GlobalHistoryLog />
       </div>
     </div>
   );
