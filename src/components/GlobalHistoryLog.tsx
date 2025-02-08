@@ -1,12 +1,16 @@
 
 import { format } from "date-fns";
-import { Clock, Edit, Plus, Trash } from "lucide-react";
+import { Clock, Edit, Plus, Trash, X } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { mockGrantHistory } from "@/data/grantHistory";
+import { mockGrants } from "@/data/grants";
 import type { GrantHistoryEntry, FilterState } from "@/types/grant";
 import { useState } from "react";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import GrantDetail from "@/pages/GrantDetail";
 
 interface GlobalHistoryLogProps {
   searchQuery?: string;
@@ -48,6 +52,8 @@ export const GlobalHistoryLog = ({
 }: GlobalHistoryLogProps) => {
   const [sortField, setSortField] = useState<SortField>("changeDate");
   const [sortOrder, setSortOrder] = useState<SortOrder>("desc");
+  const [selectedGrantId, setSelectedGrantId] = useState<number | null>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   // Filter history entries based on search query and filters
   let filteredHistory = [...mockGrantHistory];
@@ -120,48 +126,83 @@ export const GlobalHistoryLog = ({
     }
   };
 
+  const handleGrantClick = (grantId: number) => {
+    setSelectedGrantId(grantId);
+    setIsDialogOpen(true);
+  };
+
   return (
-    <Card className="p-6">
-      <div className="flex items-center gap-2 mb-4">
-        <Clock className="h-5 w-5" />
-        <h3 className="font-medium text-lg">Global Change History</h3>
-      </div>
-      <ScrollArea className="h-[400px]">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-8"></TableHead>
-              <TableHead>Grant #</TableHead>
-              <TableHead>Change</TableHead>
-              <TableHead 
-                className="cursor-pointer hover:bg-muted/50"
-                onClick={() => toggleSort("changedBy")}
-              >
-                User {sortField === "changedBy" && (sortOrder === "asc" ? "↑" : "↓")}
-              </TableHead>
-              <TableHead 
-                className="cursor-pointer hover:bg-muted/50"
-                onClick={() => toggleSort("changeDate")}
-              >
-                Time {sortField === "changeDate" && (sortOrder === "asc" ? "↑" : "↓")}
-              </TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {sortedHistory.map((entry) => (
-              <TableRow key={entry.id}>
-                <TableCell>{getChangeIcon(entry.changeType)}</TableCell>
-                <TableCell>GRT-{entry.grantId.toString().padStart(4, '0')}</TableCell>
-                <TableCell>{getChangeDescription(entry)}</TableCell>
-                <TableCell>{entry.changedBy}</TableCell>
-                <TableCell>
-                  {format(new Date(entry.changeDate), "MMM d, yyyy h:mm a")}
-                </TableCell>
+    <>
+      <Card className="p-6">
+        <div className="flex items-center gap-2 mb-4">
+          <Clock className="h-5 w-5" />
+          <h3 className="font-medium text-lg">Global Change History</h3>
+        </div>
+        <ScrollArea className="h-[400px]">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-8"></TableHead>
+                <TableHead>Grant #</TableHead>
+                <TableHead>Change</TableHead>
+                <TableHead 
+                  className="cursor-pointer hover:bg-muted/50"
+                  onClick={() => toggleSort("changedBy")}
+                >
+                  User {sortField === "changedBy" && (sortOrder === "asc" ? "↑" : "↓")}
+                </TableHead>
+                <TableHead 
+                  className="cursor-pointer hover:bg-muted/50"
+                  onClick={() => toggleSort("changeDate")}
+                >
+                  Time {sortField === "changeDate" && (sortOrder === "asc" ? "↑" : "↓")}
+                </TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </ScrollArea>
-    </Card>
+            </TableHeader>
+            <TableBody>
+              {sortedHistory.map((entry) => (
+                <TableRow key={entry.id}>
+                  <TableCell>{getChangeIcon(entry.changeType)}</TableCell>
+                  <TableCell>
+                    <Button 
+                      variant="link" 
+                      className="p-0 h-auto font-normal"
+                      onClick={() => handleGrantClick(entry.grantId)}
+                    >
+                      GRT-{entry.grantId.toString().padStart(4, '0')}
+                    </Button>
+                  </TableCell>
+                  <TableCell>{getChangeDescription(entry)}</TableCell>
+                  <TableCell>{entry.changedBy}</TableCell>
+                  <TableCell>
+                    {format(new Date(entry.changeDate), "MMM d, yyyy h:mm a")}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </ScrollArea>
+      </Card>
+
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-lg font-semibold">Grant Details</h2>
+            <Button 
+              variant="ghost" 
+              size="icon"
+              onClick={() => setIsDialogOpen(false)}
+            >
+              <X className="h-4 w-4" />
+            </Button>
+          </div>
+          {selectedGrantId && (
+            <div className="grant-detail-wrapper">
+              <GrantDetail id={selectedGrantId.toString()} />
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
+    </>
   );
 };
