@@ -13,23 +13,22 @@ import GlobalHistory from "./pages/GlobalHistory";
 const queryClient = new QueryClient();
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipPrimitive.Root>
-      <TooltipPrimitive.Provider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/grants/new" element={<NewGrant />} />
-            <Route path="/grants/:id" element={<GrantDetail />} />
-            <Route path="/history" element={<GlobalHistory />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipPrimitive.Provider>
-    </TooltipPrimitive.Root>
-  </QueryClientProvider>
+  <TooltipPrimitive.Provider delayDuration={0}>
+    <QueryClientProvider client={queryClient}>
+      <Toaster />
+      <Sonner />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="/grants/new" element={<NewGrant />} />
+          <Route path="/grants/:id" element={<GrantDetail />} />
+          <Route path="/history" element={<GlobalHistory />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
+    </QueryClientProvider>
+  </TooltipPrimitive.Provider>
 );
 
 export default App;
+
