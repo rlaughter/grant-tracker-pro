@@ -16,7 +16,7 @@ interface GlobalHistoryLogProps {
   endDate?: Date | null;
 }
 
-type SortField = "changedBy" | "changeDate";
+type SortField = "changedBy" | "changeDate" | "grantId";
 type SortOrder = "asc" | "desc";
 
 export const GlobalHistoryLog = ({ 
@@ -82,6 +82,10 @@ export const GlobalHistoryLog = ({
       const dateA = new Date(a.changeDate).getTime();
       const dateB = new Date(b.changeDate).getTime();
       return sortOrder === "asc" ? dateA - dateB : dateB - dateA;
+    } else if (sortField === "grantId") {
+      return sortOrder === "asc" 
+        ? a.grantId - b.grantId
+        : b.grantId - a.grantId;
     } else {
       const valueA = a[sortField].toLowerCase();
       const valueB = b[sortField].toLowerCase();
@@ -149,3 +153,4 @@ export const GlobalHistoryLog = ({
     </>
   );
 };
+

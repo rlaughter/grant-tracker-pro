@@ -7,10 +7,10 @@ import type { GrantHistoryEntry } from "@/types/grant";
 
 interface GrantHistoryTableProps {
   sortedHistory: GrantHistoryEntry[];
-  sortField: "changedBy" | "changeDate";
+  sortField: "changedBy" | "changeDate" | "grantId";
   sortOrder: "asc" | "desc";
   onGrantClick: (grantId: number) => void;
-  onSortToggle: (field: "changedBy" | "changeDate") => void;
+  onSortToggle: (field: "changedBy" | "changeDate" | "grantId") => void;
 }
 
 const getChangeIcon = (changeType: "create" | "update" | "delete") => {
@@ -47,7 +47,12 @@ export const GrantHistoryTable = ({
       <TableHeader>
         <TableRow>
           <TableHead className="w-8"></TableHead>
-          <TableHead>Grant #</TableHead>
+          <TableHead 
+            className="cursor-pointer hover:bg-muted/50"
+            onClick={() => onSortToggle("grantId")}
+          >
+            Grant # {sortField === "grantId" && (sortOrder === "asc" ? "↑" : "↓")}
+          </TableHead>
           <TableHead>Change</TableHead>
           <TableHead 
             className="cursor-pointer hover:bg-muted/50"
@@ -87,3 +92,4 @@ export const GrantHistoryTable = ({
     </Table>
   );
 };
+
