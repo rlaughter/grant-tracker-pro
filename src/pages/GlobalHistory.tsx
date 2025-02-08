@@ -41,7 +41,12 @@ const GlobalHistory = () => {
           startDate={startDate}
           endDate={endDate}
         />
-        <GlobalHistoryLog />
+        <GlobalHistoryLog 
+          searchQuery={searchQuery}
+          filters={filters}
+          startDate={startDate}
+          endDate={endDate}
+        />
       </div>
     </div>
   );
