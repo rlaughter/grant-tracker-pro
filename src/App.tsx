@@ -13,13 +13,13 @@ import GlobalHistory from "./pages/GlobalHistory";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <React.StrictMode>
+function App() {
+  return (
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
+      <BrowserRouter>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/grants/new" element={<NewGrant />} />
@@ -27,11 +27,10 @@ const App = () => (
             <Route path="/history" element={<GlobalHistory />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
+        </TooltipProvider>
+      </BrowserRouter>
     </QueryClientProvider>
-  </React.StrictMode>
-);
+  );
+}
 
 export default App;
-
