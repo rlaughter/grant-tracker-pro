@@ -1,4 +1,3 @@
-
 import { useParams } from "react-router-dom";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { GrantDetailHeader } from "@/components/GrantDetailHeader";
@@ -54,7 +53,7 @@ const GrantDetail = () => {
     }
 
     // Add to history log
-    const newHistoryEntry = {
+    const newHistoryEntry: GrantHistoryEntry = {
       id: mockGrantHistory.length + 1,
       grantId: grant.id,
       changeDate: new Date().toISOString(),
@@ -63,6 +62,10 @@ const GrantDetail = () => {
       oldValue: JSON.stringify(grant.fiscal),
       newValue: JSON.stringify(updatedFiscal),
       changeType: "update" as const,
+      status: grant.status,
+      grantType: grant.type,
+      specialist: grant.specialist,
+      department: grant.department
     };
 
     mockGrantHistory.push(newHistoryEntry);
@@ -116,4 +119,3 @@ const GrantDetail = () => {
 };
 
 export default GrantDetail;
-
