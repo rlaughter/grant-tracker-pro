@@ -168,6 +168,10 @@ export let mockGrantHistory = [
     oldValue: "Pending",
     newValue: "Active",
     changeType: "update" as const,
+    status: "Active",
+    grantType: "Federal",
+    specialist: "John Doe",
+    department: "Community Services"
   },
   {
     id: 2,
@@ -178,6 +182,10 @@ export let mockGrantHistory = [
     oldValue: "200000",
     newValue: "250000",
     changeType: "update" as const,
+    status: "Active",
+    grantType: "Federal",
+    specialist: "John Doe",
+    department: "Community Services"
   },
   {
     id: 3,
@@ -188,6 +196,10 @@ export let mockGrantHistory = [
     oldValue: "",
     newValue: "",
     changeType: "create" as const,
+    status: "Active",
+    grantType: "State",
+    specialist: "Jane Smith",
+    department: "Education"
   },
   {
     id: 4,
@@ -198,5 +210,9 @@ export let mockGrantHistory = [
     oldValue: "No restrictions",
     newValue: "No equipment purchases above $5,000",
     changeType: "update" as const,
+    status: "Active",
+    grantType: "Federal",
+    specialist: "John Doe",
+    department: "Community Services"
   },
 ];

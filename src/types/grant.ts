@@ -43,5 +43,9 @@ export type GrantHistoryEntry = {
   oldValue: string;
   newValue: string;
   changeType: 'create' | 'update' | 'delete';
+  status: string;
+  grantType: string;
+  specialist: string;
+  department: string;
 };
 

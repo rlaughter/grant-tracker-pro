@@ -41,7 +41,12 @@ const getChangeDescription = (entry: GrantHistoryEntry): string => {
   }
 };
 
-export const GlobalHistoryLog = ({ searchQuery = "", filters = {}, startDate, endDate }: GlobalHistoryLogProps) => {
+export const GlobalHistoryLog = ({ 
+  searchQuery = "", 
+  filters = { status: "", type: "", specialist: "", department: "" }, 
+  startDate, 
+  endDate 
+}: GlobalHistoryLogProps) => {
   // Filter history entries based on search query and filters
   let filteredHistory = [...mockGrantHistory];
 
