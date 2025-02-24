@@ -41,7 +41,7 @@ const Index = () => {
       <div className="flex justify-between items-center">
         <div className="space-y-2">
           <h1 className="text-4xl font-semibold tracking-tight text-slate-900">
-            Grant Management
+            Grant Hub
           </h1>
           <p className="text-muted-foreground">Track and manage your grants efficiently</p>
         </div>
