@@ -58,28 +58,52 @@ export const GrantDetailHeader = ({ grant, hideBackButton = false }: GrantDetail
   };
 
   const handleExport = () => {
-    // Create CSV content
-    const csvContent = [
-      // Headers
-      ['Field', 'Value'],
-      ['Application Number', grant.applicationNumber],
-      ['Grant Number', grant.grantNumber],
-      ['Name', grant.name],
-      ['Amount', grant.amount.toString()],
-      ['Specialist', grant.specialist],
-      ['Status', grant.status],
-      ['Type', grant.type],
-      ['Department', grant.department],
-      ['Grantor Type', grant.grantorType],
-      ['Grantor ID', grant.grantorId],
-      ['Master Grant Number', grant.masterGrantNumber || ''],
-      ['CFDA Number', grant.cfdaNumber || ''],
-      ['Grantor Name', grant.grantorInfo.name],
-      ['Grantor Contact', grant.grantorInfo.contact],
-      ['Grantor Phone', grant.grantorInfo.phone],
-      ['Grantor Email', grant.grantorInfo.email],
-      ['Grantor Address', grant.grantorInfo.address],
-    ].map(row => row.join(',')).join('\n');
+    // Create CSV content with field names as columns
+    const fields = [
+      'applicationNumber',
+      'grantNumber',
+      'name',
+      'amount',
+      'specialist',
+      'status',
+      'type',
+      'department',
+      'grantorType',
+      'grantorId',
+      'masterGrantNumber',
+      'cfdaNumber',
+      'grantorName',
+      'grantorContact',
+      'grantorPhone',
+      'grantorEmail',
+      'grantorAddress'
+    ];
+
+    // Create the header row
+    const headerRow = fields.join(',');
+
+    // Create the data row
+    const dataRow = [
+      grant.applicationNumber,
+      grant.grantNumber,
+      grant.name,
+      grant.amount,
+      grant.specialist,
+      grant.status,
+      grant.type,
+      grant.department,
+      grant.grantorType,
+      grant.grantorId,
+      grant.masterGrantNumber || '',
+      grant.cfdaNumber || '',
+      grant.grantorInfo.name,
+      grant.grantorInfo.contact,
+      grant.grantorInfo.phone,
+      grant.grantorInfo.email,
+      grant.grantorInfo.address
+    ].map(value => `"${value}"`).join(',');
+
+    const csvContent = `${headerRow}\n${dataRow}`;
 
     // Create a Blob containing the CSV data
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
