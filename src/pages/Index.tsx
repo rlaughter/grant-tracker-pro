@@ -22,8 +22,9 @@ const Index = () => {
     department: "",
   });
 
-  const activeGrantsCount = mockGrants.filter(grant => grant.status === "Active").length;
+  const totalGrants = mockGrants.length;
   const totalSpentAmount = mockGrants.reduce((acc, grant) => acc + (grant.amount * 0.3), 0);
+  const totalAvailableAmount = mockGrants.reduce((acc, grant) => acc + grant.amount, 0) - totalSpentAmount;
 
   const handleSearch = (query: string, newStartDate?: Date | null, newEndDate?: Date | null) => {
     setSearchQuery(query);
@@ -58,20 +59,20 @@ const Index = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <DashboardCard
-          title="Total Active Grants"
-          value={activeGrantsCount}
+          title="Total Grants"
+          value={totalGrants}
           icon={<FileText className="h-8 w-8" />}
           className="dashboard-card-1"
         />
         <DashboardCard
-          title="Total Spent"
+          title="Amount Spent"
           value={`$${(totalSpentAmount / 1000000).toFixed(1)}M`}
           icon={<DollarSign className="h-8 w-8" />}
           className="dashboard-card-2"
         />
         <DashboardCard
-          title="Total Funding"
-          value="$2.4M"
+          title="Total Available"
+          value={`$${(totalAvailableAmount / 1000000).toFixed(1)}M`}
           icon={<DollarSign className="h-8 w-8" />}
           className="dashboard-card-3"
         />
