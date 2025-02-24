@@ -86,7 +86,7 @@ export const BasicInfoForm = ({ formData, handleInputChange }: BasicInfoFormProp
               <SelectValue placeholder="Please Select" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">Please Select</SelectItem>
+              <SelectItem value="none">Please Select</SelectItem>
               <SelectItem value="federal">Federal</SelectItem>
               <SelectItem value="state">State</SelectItem>
               <SelectItem value="local">Local</SelectItem>
