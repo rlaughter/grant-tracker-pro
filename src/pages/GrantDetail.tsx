@@ -1,3 +1,4 @@
+
 import { useParams } from "react-router-dom";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { GrantDetailHeader } from "@/components/GrantDetailHeader";
@@ -7,16 +8,32 @@ import { GrantBasicInfo } from "@/components/GrantBasicInfo";
 import { GrantGrantorInfo } from "@/components/GrantGrantorInfo";
 import { GrantFiscalInfo } from "@/components/GrantFiscalInfo";
 import { GrantFinancialTracking } from "@/components/GrantFinancialTracking";
+import { AuditTrail } from "@/components/AuditTrail";
 import { useToast } from "@/hooks/use-toast";
-import { mockGrants, mockGrantHistory } from "@/data/mockData";
-import type { Grant, GrantHistoryEntry } from "@/types/grant";
+import { mockGrants } from "@/data/grants";
+import { auditService } from "@/services/AuditService";
+import { useEffect } from "react";
 
 const GrantDetail = () => {
   const { id } = useParams();
   const { toast } = useToast();
+  const grantId = Number(id);
+
+  // Log view action when component mounts
+  useEffect(() => {
+    auditService.logAction(
+      "current-user-id", // In a real app, this would come from auth context
+      "Current User",
+      "view",
+      grantId
+    );
+  }, [grantId]);
 
   // Find the grant in mockGrants
-  const grantData = mockGrants.find(g => g.id === Number(id));
+  const grantData = mockGrants.find(g => g.id === grantId);
+
+  // Get audit entries for this grant
+  const auditEntries = auditService.getAuditLog(grantId);
 
   // Mock data combining grant data with additional fields
   const grant = {
@@ -43,6 +60,19 @@ const GrantDetail = () => {
   };
 
   const handleFiscalUpdate = (updatedFiscal: any) => {
+    // Log the update action
+    auditService.logAction(
+      "current-user-id",
+      "Current User",
+      "update",
+      grantId,
+      {
+        field: "fiscal",
+        oldValue: JSON.stringify(grant.fiscal),
+        newValue: JSON.stringify(updatedFiscal)
+      }
+    );
+
     // Update mock grants
     const grantIndex = mockGrants.findIndex(g => g.id === grant.id);
     if (grantIndex !== -1) {
@@ -51,24 +81,6 @@ const GrantDetail = () => {
         fiscal: updatedFiscal
       };
     }
-
-    // Add to history log
-    const newHistoryEntry: GrantHistoryEntry = {
-      id: mockGrantHistory.length + 1,
-      grantId: grant.id,
-      changeDate: new Date().toISOString(),
-      changedBy: "Current User", // In a real app, this would come from auth context
-      field: "fiscal",
-      oldValue: JSON.stringify(grant.fiscal),
-      newValue: JSON.stringify(updatedFiscal),
-      changeType: "update" as const,
-      status: grant.status,
-      grantType: grant.type,
-      specialist: grant.specialist,
-      department: grant.department
-    };
-
-    mockGrantHistory.push(newHistoryEntry);
 
     toast({
       title: "Fiscal Information Updated",
@@ -85,15 +97,18 @@ const GrantDetail = () => {
       <GrantDetailHeader grant={grant} />
       
       <Tabs defaultValue="details" className="w-full">
-        <TabsList className="grid w-full max-w-2xl grid-cols-3">
-          <TabsTrigger value="details" className="flex items-center gap-2">
+        <TabsList className="grid w-full max-w-2xl grid-cols-4">
+          <TabsTrigger value="details">
             Details & Finances
           </TabsTrigger>
-          <TabsTrigger value="documents" className="flex items-center gap-2">
+          <TabsTrigger value="documents">
             Documents
           </TabsTrigger>
-          <TabsTrigger value="timeline" className="flex items-center gap-2">
+          <TabsTrigger value="timeline">
             Timeline
+          </TabsTrigger>
+          <TabsTrigger value="audit">
+            Audit Trail
           </TabsTrigger>
         </TabsList>
 
@@ -112,6 +127,10 @@ const GrantDetail = () => {
 
         <TabsContent value="timeline">
           <GrantTimeline grantId={grant.id} />
+        </TabsContent>
+
+        <TabsContent value="audit">
+          <AuditTrail entries={auditEntries} />
         </TabsContent>
       </Tabs>
     </div>

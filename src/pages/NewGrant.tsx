@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -8,6 +7,7 @@ import { BasicInfoForm } from "@/components/grant-form/BasicInfoForm";
 import { GrantorInfoForm } from "@/components/grant-form/GrantorInfoForm";
 import { FiscalInfoForm } from "@/components/grant-form/FiscalInfoForm";
 import { PlaceholderForm } from "@/components/grant-form/PlaceholderForm";
+import { auditService } from "@/services/AuditService";
 
 const NewGrant = () => {
   const navigate = useNavigate();
@@ -60,6 +60,14 @@ const NewGrant = () => {
       });
       return;
     }
+
+    // Log the creation action
+    auditService.logAction(
+      "current-user-id",
+      "Current User",
+      "create",
+      1 //mockGrants.length + 1 - mockGrants is not available here
+    );
 
     toast({
       title: "Success",
