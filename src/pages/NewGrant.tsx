@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -46,7 +45,6 @@ const NewGrant = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would typically save the grant data
     toast({
       title: "Success",
       description: "Grant created successfully",
@@ -79,6 +77,15 @@ const NewGrant = () => {
           <TabsContent value="basic" className="space-y-4">
             <Card className="p-6">
               <div className="grid grid-cols-2 gap-6">
+                <div className="col-span-2 space-y-2">
+                  <Label htmlFor="name">Grant Name</Label>
+                  <Input
+                    id="name"
+                    value={formData.name}
+                    onChange={(e) => handleInputChange("name", e.target.value)}
+                  />
+                </div>
+
                 <div className="space-y-2">
                   <Label htmlFor="applicationNumber">Application #</Label>
                   <Input
@@ -129,15 +136,6 @@ const NewGrant = () => {
                       <SelectItem value="local">Local</SelectItem>
                     </SelectContent>
                   </Select>
-                </div>
-
-                <div className="col-span-2 space-y-2">
-                  <Label htmlFor="name">Grant Name</Label>
-                  <Input
-                    id="name"
-                    value={formData.name}
-                    onChange={(e) => handleInputChange("name", e.target.value)}
-                  />
                 </div>
 
                 <div className="space-y-2">
