@@ -76,15 +76,17 @@ export const BasicInfoForm = ({ formData, handleInputChange }: BasicInfoFormProp
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="grantType">Grant Type</Label>
+          <Label htmlFor="grantType" className="after:content-['*'] after:ml-0.5 after:text-red-500">Grant Type</Label>
           <Select
             value={formData.grantType}
             onValueChange={(value) => handleInputChange("grantType", value)}
+            required
           >
             <SelectTrigger>
-              <SelectValue placeholder="Select type" />
+              <SelectValue placeholder="Please Select" />
             </SelectTrigger>
             <SelectContent>
+              <SelectItem value="">Please Select</SelectItem>
               <SelectItem value="federal">Federal</SelectItem>
               <SelectItem value="state">State</SelectItem>
               <SelectItem value="local">Local</SelectItem>

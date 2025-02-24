@@ -17,7 +17,7 @@ const NewGrant = () => {
     applicationNumber: "",
     grantNumber: "",
     status: "active",
-    grantType: "local",
+    grantType: "",
     name: "",
     department: "",
     masterGrantNumber: "",
@@ -46,6 +46,16 @@ const NewGrant = () => {
       toast({
         title: "Error",
         description: "Please fill in all required fields: Grant Name, Application #, and Grant #",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Validate grant type
+    if (!formData.grantType) {
+      toast({
+        title: "Error",
+        description: "Please select a Grant Type",
         variant: "destructive",
       });
       return;
