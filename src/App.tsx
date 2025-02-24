@@ -15,23 +15,24 @@ const queryClient = new QueryClient();
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <BrowserRouter>
-          <Toaster />
-          <Sonner />
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/grants/new" element={<NewGrant />} />
-            <Route path="/grants/:id" element={<GrantDetail />} />
-            <Route path="/history" element={<GlobalHistory />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
-    </QueryClientProvider>
+    <StrictMode>
+      <BrowserRouter>
+        <QueryClientProvider client={queryClient}>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/grants/new" element={<NewGrant />} />
+              <Route path="/grants/:id" element={<GrantDetail />} />
+              <Route path="/history" element={<GlobalHistory />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </TooltipProvider>
+        </QueryClientProvider>
+      </BrowserRouter>
+    </StrictMode>
   );
 }
 
 export default App;
-
