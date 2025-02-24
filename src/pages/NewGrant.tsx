@@ -45,6 +45,17 @@ const NewGrant = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validate required fields
+    if (!formData.name || !formData.applicationNumber || !formData.grantNumber) {
+      toast({
+        title: "Error",
+        description: "Please fill in all required fields: Grant Name, Application #, and Grant #",
+        variant: "destructive",
+      });
+      return;
+    }
+
     toast({
       title: "Success",
       description: "Grant created successfully",
@@ -78,29 +89,32 @@ const NewGrant = () => {
             <Card className="p-6">
               <div className="grid grid-cols-2 gap-6">
                 <div className="col-span-2 space-y-2">
-                  <Label htmlFor="name">Grant Name</Label>
+                  <Label htmlFor="name" className="after:content-['*'] after:ml-0.5 after:text-red-500">Grant Name</Label>
                   <Input
                     id="name"
                     value={formData.name}
                     onChange={(e) => handleInputChange("name", e.target.value)}
+                    required
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="applicationNumber">Application #</Label>
+                  <Label htmlFor="applicationNumber" className="after:content-['*'] after:ml-0.5 after:text-red-500">Application #</Label>
                   <Input
                     id="applicationNumber"
                     value={formData.applicationNumber}
                     onChange={(e) => handleInputChange("applicationNumber", e.target.value)}
+                    required
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="grantNumber">Grant #</Label>
+                  <Label htmlFor="grantNumber" className="after:content-['*'] after:ml-0.5 after:text-red-500">Grant #</Label>
                   <Input
                     id="grantNumber"
                     value={formData.grantNumber}
                     onChange={(e) => handleInputChange("grantNumber", e.target.value)}
+                    required
                   />
                 </div>
 
