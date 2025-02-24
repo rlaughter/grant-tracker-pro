@@ -1,4 +1,5 @@
-import { useMemo } from "react";
+
+import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
 import {
@@ -21,9 +22,12 @@ interface GrantsListingProps {
   endDate?: Date | null;
 }
 
+const ITEMS_PER_PAGE = 10;
+
 export const GrantsListing = ({ searchQuery, filters, startDate, endDate }: GrantsListingProps) => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const [currentPage, setCurrentPage] = useState(1);
 
   const handleRowClick = (grantId: number) => {
     navigate(`/grants/${grantId}`);
@@ -100,33 +104,69 @@ export const GrantsListing = ({ searchQuery, filters, startDate, endDate }: Gran
     });
   }, [searchQuery, filters, startDate, endDate]);
 
+  // Pagination calculations
+  const totalPages = Math.ceil(filteredGrants.length / ITEMS_PER_PAGE);
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const paginatedGrants = filteredGrants.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+
+  // Generate page numbers to display
+  const getPageNumbers = () => {
+    if (totalPages <= 1) return [];
+    return Array.from({ length: totalPages }, (_, i) => i + 1);
+  };
+
   return (
     <div className="space-y-4">
       <GrantsTable 
-        grants={filteredGrants}
+        grants={paginatedGrants}
         onRowClick={handleRowClick}
         onSpecialistChange={handleSpecialistChange}
       />
 
-      <Pagination>
-        <PaginationContent>
-          <PaginationItem>
-            <PaginationPrevious href="#" />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink href="#" isActive>1</PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink href="#">2</PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink href="#">3</PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationNext href="#" />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
+      {totalPages > 1 && (
+        <Pagination>
+          <PaginationContent>
+            {currentPage > 1 && (
+              <PaginationItem>
+                <PaginationPrevious 
+                  href="#" 
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setCurrentPage(prev => prev - 1);
+                  }} 
+                />
+              </PaginationItem>
+            )}
+            
+            {getPageNumbers().map(pageNum => (
+              <PaginationItem key={pageNum}>
+                <PaginationLink 
+                  href="#" 
+                  isActive={currentPage === pageNum}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setCurrentPage(pageNum);
+                  }}
+                >
+                  {pageNum}
+                </PaginationLink>
+              </PaginationItem>
+            ))}
+
+            {currentPage < totalPages && (
+              <PaginationItem>
+                <PaginationNext 
+                  href="#" 
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setCurrentPage(prev => prev + 1);
+                  }} 
+                />
+              </PaginationItem>
+            )}
+          </PaginationContent>
+        </Pagination>
+      )}
     </div>
   );
 };
