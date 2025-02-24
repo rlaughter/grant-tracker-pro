@@ -57,6 +57,52 @@ export const GrantDetailHeader = ({ grant, hideBackButton = false }: GrantDetail
     });
   };
 
+  const handleExport = () => {
+    // Create CSV content
+    const csvContent = [
+      // Headers
+      ['Field', 'Value'],
+      ['Application Number', grant.applicationNumber],
+      ['Grant Number', grant.grantNumber],
+      ['Name', grant.name],
+      ['Amount', grant.amount.toString()],
+      ['Specialist', grant.specialist],
+      ['Status', grant.status],
+      ['Type', grant.type],
+      ['Department', grant.department],
+      ['Grantor Type', grant.grantorType],
+      ['Grantor ID', grant.grantorId],
+      ['Master Grant Number', grant.masterGrantNumber || ''],
+      ['CFDA Number', grant.cfdaNumber || ''],
+      ['Grantor Name', grant.grantorInfo.name],
+      ['Grantor Contact', grant.grantorInfo.contact],
+      ['Grantor Phone', grant.grantorInfo.phone],
+      ['Grantor Email', grant.grantorInfo.email],
+      ['Grantor Address', grant.grantorInfo.address],
+    ].map(row => row.join(',')).join('\n');
+
+    // Create a Blob containing the CSV data
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    
+    // Create a download link and trigger it
+    const link = document.createElement('a');
+    if (link.download !== undefined) {
+      const url = URL.createObjectURL(blob);
+      link.setAttribute('href', url);
+      link.setAttribute('download', `grant_${grant.grantNumber}.csv`);
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+
+      toast({
+        title: "Export Successful",
+        description: "The grant details have been exported to CSV.",
+      });
+    }
+  };
+
   return (
     <Card className="p-6">
       <div className="flex flex-col space-y-6">
@@ -77,7 +123,7 @@ export const GrantDetailHeader = ({ grant, hideBackButton = false }: GrantDetail
               <Printer className="h-4 w-4 mr-2" />
               Print
             </Button>
-            <Button variant="outline" size="sm">
+            <Button variant="outline" size="sm" onClick={handleExport}>
               <Download className="h-4 w-4 mr-2" />
               Export
             </Button>
