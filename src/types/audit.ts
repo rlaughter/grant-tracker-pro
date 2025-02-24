@@ -3,7 +3,6 @@ export type AuditAction =
   | 'create'
   | 'update'
   | 'delete'
-  | 'view'
   | 'upload'
   | 'download'
   | 'delete_document';

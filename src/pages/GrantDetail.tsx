@@ -12,22 +12,11 @@ import { AuditTrail } from "@/components/AuditTrail";
 import { useToast } from "@/hooks/use-toast";
 import { mockGrants } from "@/data/grants";
 import { auditService } from "@/services/AuditService";
-import { useEffect } from "react";
 
 const GrantDetail = () => {
   const { id } = useParams();
   const { toast } = useToast();
   const grantId = Number(id);
-
-  // Log view action when component mounts
-  useEffect(() => {
-    auditService.logAction(
-      "current-user-id", // In a real app, this would come from auth context
-      "Current User",
-      "view",
-      grantId
-    );
-  }, [grantId]);
 
   // Find the grant in mockGrants
   const grantData = mockGrants.find(g => g.id === grantId);

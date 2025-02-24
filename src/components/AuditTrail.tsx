@@ -25,8 +25,6 @@ export const AuditTrail = ({ entries }: AuditTrailProps) => {
         return `Updated ${entry.field} from "${entry.oldValue}" to "${entry.newValue}"`;
       case 'delete':
         return 'Deleted grant record';
-      case 'view':
-        return 'Viewed grant record';
       case 'upload':
         return `Uploaded document: ${entry.details}`;
       case 'download':
