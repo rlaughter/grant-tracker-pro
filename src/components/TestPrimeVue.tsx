@@ -1,8 +1,7 @@
 
 import React from 'react';
-import { Button } from 'primevue/button';
-import { InputText } from 'primevue/inputtext';
-import { Card } from 'primevue/card';
+import Button from 'primevue/button';
+import InputText from 'primevue/inputtext';
 
 export const TestPrimeVue: React.FC = () => {
   return (
