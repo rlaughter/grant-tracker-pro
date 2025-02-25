@@ -11,24 +11,31 @@ import GrantDetail from "./pages/GrantDetail";
 import NewGrant from "./pages/NewGrant";
 import GlobalHistory from "./pages/GlobalHistory";
 
+// PrimeVue imports
+import PrimeVue from 'primevue/config';
+import 'primevue/resources/themes/lara-light-blue/theme.css';
+import 'primeicons/primeicons.css';
+
 const queryClient = new QueryClient();
 
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/grants/new" element={<NewGrant />} />
-            <Route path="/grants/:id" element={<GrantDetail />} />
-            <Route path="/history" element={<GlobalHistory />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </TooltipProvider>
-      </BrowserRouter>
+      <PrimeVue>
+        <BrowserRouter>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/grants/new" element={<NewGrant />} />
+              <Route path="/grants/:id" element={<GrantDetail />} />
+              <Route path="/history" element={<GlobalHistory />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </TooltipProvider>
+        </BrowserRouter>
+      </PrimeVue>
     </QueryClientProvider>
   );
 }
