@@ -12,7 +12,7 @@ import NewGrant from "./pages/NewGrant";
 import GlobalHistory from "./pages/GlobalHistory";
 
 // PrimeVue imports
-import 'primevue/resources/themes/lara-light-indigo/theme.css';
+import 'primevue/resources/themes/saga-blue/theme.css';
 import 'primeicons/primeicons.css';
 
 const queryClient = new QueryClient();

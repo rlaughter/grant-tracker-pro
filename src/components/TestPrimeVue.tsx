@@ -1,13 +1,14 @@
 
 import React from 'react';
-import Button from 'primevue/button';
-import InputText from 'primevue/inputtext';
-import Card from 'primevue/card';
+import { Button } from 'primevue/button';
+import { InputText } from 'primevue/inputtext';
+import { Card } from 'primevue/card';
 
-export const TestPrimeVue = () => {
+export const TestPrimeVue: React.FC = () => {
   return (
     <div className="p-4">
-      <Card title="PrimeVue Test Component">
+      <div className="card">
+        <h3>PrimeVue Test Component</h3>
         <div className="flex flex-col gap-4">
           <div className="p-float-label">
             <InputText id="username" />
@@ -15,7 +16,7 @@ export const TestPrimeVue = () => {
           </div>
           <Button label="PrimeVue Button" icon="pi pi-check" />
         </div>
-      </Card>
+      </div>
     </div>
   );
 };
