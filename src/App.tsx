@@ -11,9 +11,6 @@ import GrantDetail from "./pages/GrantDetail";
 import NewGrant from "./pages/NewGrant";
 import GlobalHistory from "./pages/GlobalHistory";
 
-// PrimeVue imports
-import 'primeicons/primeicons.css';
-
 const queryClient = new QueryClient();
 
 function App() {
