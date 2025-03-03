@@ -10,14 +10,14 @@ import { useToast } from "@/components/ui/use-toast";
 interface GrantFiltersProps {
   onSearch: (query: string, startDate?: Date | null, endDate?: Date | null) => void;
   onFilterChange: (key: keyof FilterState, value: string) => void;
-  startDate?: Date | null;
-  endDate?: Date | null;
+  startDate: Date | null;
+  endDate: Date | null;
 }
 
 export const GrantFilters = ({ onSearch, onFilterChange, startDate, endDate }: GrantFiltersProps) => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [startDateStr, setStartDateStr] = useState<string>("");
-  const [endDateStr, setEndDateStr] = useState<string>("");
+  const [startDateStr, setStartDateStr] = useState<string>(startDate ? startDate.toISOString().split('T')[0] : "");
+  const [endDateStr, setEndDateStr] = useState<string>(endDate ? endDate.toISOString().split('T')[0] : "");
   const [showAdvanced, setShowAdvanced] = useState(false);
   const { toast } = useToast();
 
